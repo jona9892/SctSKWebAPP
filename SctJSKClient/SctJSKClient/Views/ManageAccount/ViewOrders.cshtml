@@ -1,0 +1,24 @@
+﻿@model DTOModel.User
+
+@{
+    ViewBag.Title = "ViewOrders";
+}
+
+<h2>ViewOrders</h2>
+
+<table>
+
+    <tr>
+        <th>Produkt</th>
+
+    </tr>
+    @foreach (var item in Model.Order)
+    {
+        foreach (var od in item.OrderDetails)
+        {
+        <tr>
+            <td>@od.Product.Title</td>
+        </tr>
+        }
+    }
+</table>

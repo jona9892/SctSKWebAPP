@@ -1,0 +1,31 @@
+﻿@model SctJSKClient.ViewModels.CategoryDetailsViewModel
+
+<style>
+
+    #left {
+        float: left;
+        overflow: auto;
+        margin-left: -2%;
+        min-width: 25%;
+    }
+    .panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 20px;
+    color: inherit;
+}
+
+</style>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2 class="panel-title">Kategorier</h2>
+    </div>
+
+    <div class="list-group">
+        @foreach (var item in Model.Categories)
+            {
+            <a href="/Home/CategoryDetails/@item.Id" class="list-group-item">@item.Name</a>
+        }
+    </div>
+</div>

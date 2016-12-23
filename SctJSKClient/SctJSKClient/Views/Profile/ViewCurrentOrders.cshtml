@@ -1,0 +1,52 @@
+﻿@model SctJSKClient.Models.UserOrderModel
+
+@{
+    ViewBag.Title = "ViewCurrentOrders";
+}
+<style>
+    #text {
+        color: #428bca;
+    }
+    a.my-class { color: #ffffff }
+</style>
+<div class="container">
+    <table class="table table-hover custab" style="background-color:white">
+        <thead>
+            <tr>
+                <th id="text">
+                    Ordre Nr
+                </th>
+                <th>
+                    @Html.ActionLink("Ordre Nr", "ViewCurrentOrders", new { sortOrder = ViewBag.OrderCreatedSortParm })
+                </th>
+                <th>
+                    @Html.ActionLink("Ordre dato", "ViewCurrentOrders", new { sortOrder = ViewBag.DateSortParm })
+                </th>
+                <th>
+                    @Html.ActionLink("Total pris", "ViewCurrentOrders", new { sortOrder = ViewBag.TotalPriceSortParm })
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.OrderCreated</td>
+                <td>@item.OrderDate</td>
+                <td>@item.TotalPrice dkk</td>
+                <td class="text-center">
+                    <a class='btn btn-info btn-xs' href="/Profile/ViewOrderDetails/@item.Id">
+                        <span class="glyphicon glyphicon-info-sign"></span> Detaljer
+                    </a>
+                    <button class="btn btn-danger btn-xs">
+                        @Html.ActionLink("Slet", "Delete", new { id = item.Id, @class = "my-class" },
+                      new { onclick = "return confirm('Er du sikker på du vil slette denne ordre?');" })
+                        <span class="glyphicon glyphicon-remove pull-left"></span>
+
+                    </button>
+
+                </td>
+            </tr>
+        }
+    </table>
+</div>

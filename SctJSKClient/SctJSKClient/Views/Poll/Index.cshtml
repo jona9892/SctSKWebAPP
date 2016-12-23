@@ -1,0 +1,87 @@
+﻿@model IEnumerable<DTOModel.Poll>
+@using SctJSKClient.Security
+
+<style>
+    .prod_title {
+        color: #428bca;
+        padding: 5px 0 0 15px;
+        font-size: 25px;
+    }
+
+    .blockLink {
+        display: block;
+        padding: 10px;
+        background-color: pink; /*maybe not pink, but you get the idea*/
+    }
+
+    a.my-class {
+        color: #ffffff;
+    }
+
+        a.my-class:active {
+            color: #ffffff;
+        }
+
+        a.my-class:link {
+            color: #ffffff;
+        }
+
+        a.my-class:visited {
+            color: #ffffff;
+        }
+</style>
+@if (SessionPersister.UserRole == "Admin")
+{
+    <div style="margin-bottom:2%; text-align:center;">
+        <a class="btn btn-lg btn-primary " href="/Poll/Create">
+            <i class="glyphicon glyphicon-plus pull-left"></i><span>&nbsp;Tilføj afsteming</span>
+        </a>
+    </div>
+
+
+    <div class="container">
+        <table class="table table-hover custab" style="background-color:white">
+            @foreach (var poll in Model)
+            {
+                <tr>
+                    <td class="prod_title"><a href="/Poll/GoToPoll/@poll.Id">@poll.Question</a></td>
+                    <td style="font-size:18px">@(poll.Active ? "Aktiv" : "Ikke aktiv")</td>
+                    <td>
+                        <a class='btn btn-success' href="/Poll/PollResult/@poll.Id"><span class="glyphicon glyphicon-saved"></span> Resultat</a>
+                    </td>
+                    <td class="text-right">
+                        <a class='btn btn-info' href="/Poll/Edit/@poll.Id"><span class="glyphicon glyphicon-info-sign"></span> Redigere</a>
+                        <button class="btn btn-danger">
+                            @Html.ActionLink("Slet", "Delete", new { id = poll.Id, @class = "my-class" },
+                      new { onclick = "return confirm('Er du sikker på du vil slette denne afstemning?');" })
+                            <span class="glyphicon glyphicon-remove pull-left"></span>
+
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <div class="panel panel-heading">
+        <p style="text-align:center; font-size: 25px; padding: 10px; color:grey">Aktive afstemninger(@Model.Where(p =>p.Active == true).Count())</p>
+        <div class="clear"></div>
+    </div>
+    foreach (var poll in Model)
+    {
+        if (poll.Active == true)
+        {
+            <a href="/Poll/GoToPoll/@poll.Id">
+                <div class="panel panel-default" style="text-align:center; cursor:pointer;">
+                    <p class="prod_title">@poll.Question</p>
+                    <div class="clear"></div>
+                </div>
+            </a>
+        }
+
+    }
+}
+
+

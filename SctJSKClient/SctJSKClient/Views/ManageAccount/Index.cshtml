@@ -1,0 +1,13 @@
+﻿@using SctJSKClient.Security
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<h2>@SessionPersister.Username</h2>
+<ul>
+    <li>@Html.ActionLink("View Orders", "ViewOrders", "ManageAccount")</li>
+
+</ul>

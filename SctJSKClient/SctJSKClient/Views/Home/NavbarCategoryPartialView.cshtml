@@ -1,0 +1,7 @@
+﻿@model IEnumerable<DTOModel.Category>
+
+@foreach (var item in Model)
+{
+    <li>@Html.ActionLink(item.Name, "CategoryDetails", new { id = item.Id})</li>
+}
+

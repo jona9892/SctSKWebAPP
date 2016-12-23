@@ -1,0 +1,28 @@
+﻿@model SctJSKClient.Models.UserOrderModel
+
+@{
+    ViewBag.Title = "ViewOrders";
+}
+
+<div class="container">
+    <table class="table table-hover custab" style="background-color:white">
+        <thead>
+            <tr>
+                <th>Ordre Nr</th>
+                <th>Ordre oprettet</th>
+                <th>Ordre dato</th>
+                <th>Total pris</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.OrderCreated</td>
+                <td>@item.OrderDate</td>
+                <td>@item.TotalPrice dkk</td>
+                <td class="text-center"><a class='btn btn-info btn-xs' href="/Profile/ViewOrderDetails/@item.Id"><span class="glyphicon glyphicon-info-sign"></span> Detaljer</a></td>
+            </tr>
+        }
+    </table>
+</div>

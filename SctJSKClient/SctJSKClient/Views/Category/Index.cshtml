@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DTOModel.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    #text {
+        color: #428bca;
+    }
+</style>
+<h2>Kategorier</h2>
+
+<p>
+    @Html.ActionLink("Tilføj ny", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Navn", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th id="text">
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Redigere", "Edit", new { id=item.Id }) | 
+            @Html.ActionLink("Fjern", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+</table>

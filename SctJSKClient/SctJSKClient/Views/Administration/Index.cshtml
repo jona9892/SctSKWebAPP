@@ -1,0 +1,42 @@
+﻿@model SctJSKClient.Models.OrderDate
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 style="color:#3277b3">Vælg bestillings dato</h2>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.orderdate, htmlAttributes: new { style= "color:#3277b3", @class = "control-label col-md-5" })
+            <div>
+                @Html.TextBoxFor(m => m.orderdate, new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(model => model.orderdate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <button type="submit" name="command" value="submit2" class="btn btn-primary btn-sm btn-block"><span class="glyphicon glyphicon-user"></span>Se kunders ordrer</button>
+        <button type="submit" name="command" value="submit1" class="btn btn-primary btn-sm btn-block"><span class="glyphicon glyphicon-share-alt"></span>Se antal bestiltet produkter</button>
+    </div>
+}
+
+@*
+    <a href="@Url.Action("ViewOrderedCustomers", "Administration")" class="btn btn-primary btn-sm btn-block">
+        <span class="glyphicon glyphicon-share-alt"></span> Se kunders ordrer
+    </a>
+
+    <a href="@Url.Action("ViewOrderedProducts", "Administration")" class="btn btn-primary btn-sm btn-block">
+        <span class="glyphicon glyphicon-user"></span> Se antal bestiltet produkter
+    </a>
+*@

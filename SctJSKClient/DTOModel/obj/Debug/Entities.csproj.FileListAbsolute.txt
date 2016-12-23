@@ -1,0 +1,11 @@
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\DTOModel.dll.config
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\DTOModel.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\DTOModel.pdb
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\BeginCollectionItem.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\Newtonsoft.Json.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\System.Net.Http.Extensions.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\System.Net.Http.Primitives.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\bin\Debug\Newtonsoft.Json.xml
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\obj\Debug\DTOModel.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\DTOModel\obj\Debug\DTOModel.pdb

@@ -1,0 +1,18 @@
+﻿@model SctJSKClient.Models.OrderDate
+
+<div class="editorRow">
+    @using (Html.BeginCollectionItem("dates"))
+    {
+        <table>
+            <tr class="col-xs-5 col-sm-4 col-md-4 col-lg-3">
+                <td>
+                   @Html.TextBoxFor(m => m.orderdate, new { @class = "datepicker" })
+                   @Html.ValidationMessageFor(model => model.orderdate, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    <a href="#" class="deleteRow"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+        </table>
+    }
+</div>

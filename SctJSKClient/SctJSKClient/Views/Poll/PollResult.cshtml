@@ -1,0 +1,54 @@
+﻿@model SctJSKClient.ViewModels.PollResultViewModel
+
+@{
+    ViewBag.Title = "PollResult";
+}
+@section scripts{
+    <script type="text/javascript">
+
+        function updateProgress(percentage) {
+            document.getElementById('ProgressBar').style.width = percentage + "%";
+        }
+    </script>
+}
+
+<div class="panel panel-primary" style="width:100%; margin:20px">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Afstemning: @Model.Poll.Question
+        </h3>
+    </div>
+
+    <div class="panel-body" style="margin:0px; width:100%;">
+        <table class="table table-striped">
+            @foreach (var item in Model.Results)
+            {
+                <thead>
+                    <tr>
+                        <th>Svar</th>
+                        <th>Antal stemmer</th>
+                        <th>Total antal stemmer: @item.totalvotes</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>
+                        <label>@item.PollOption</label>                        
+                    </td>
+                    <td>
+                        <div>
+                            @item.votes
+                        </div>
+                    </td>
+                    <td>
+                        <div class="progress">
+                            <div id="ProgressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: @(item.VotePercent+"%")">
+                                @item.VotePercent %
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

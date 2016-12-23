@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+@using SctJSKClient.Security
+@using SctJSKClient.Models
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fullcalendar")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+
+<body style="background:#F8F8F8; padding-top: 0">
+    <style>
+        #shadow {
+            -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.64);
+            -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.64);
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.64);
+        }
+
+        body, html {
+            height: 100%;
+        }
+
+        nav.sidebar, .main {
+            -webkit-transition: margin 200ms ease-out;
+            -moz-transition: margin 200ms ease-out;
+            -o-transition: margin 200ms ease-out;
+            transition: margin 200ms ease-out;
+        }
+
+        .main {
+            padding: 10px 10px 0 10px;
+        }
+
+        nav.sidebar .navbar-nav .open .dropdown-menu > li > a:hover, nav.sidebar .navbar-nav .open .dropdown-menu > li > a:focus {
+            color: #CCC;
+            background-color: transparent;
+        }
+
+        nav:hover .forAnimate {
+            opacity: 1;
+        }
+
+        section {
+            padding-left: 15px;
+        }
+    </style>
+
+    <div class="container" style="background-color: #EFEFEF;">
+        <div class="page-header" style="margin-top:inherit; margin-bottom:inherit; overflow:auto">
+            <h1 style="font-weight: bold; float:left">
+                <font color="#42a7f4">@Html.ActionLink("Sct.Jacobi Kantine", "Index", "Home")</font>
+            </h1>
+
+            <div style="float:right; margin-top:2%">
+                <a class="btn btn-lg" href="/Profile/Index" style="">
+                    <i class="glyphicon glyphicon-user pull-left"></i><span>&nbsp;@SessionPersister.Username</span>
+                </a>
+            </div>
+            @if (SessionPersister.UserRole.Equals("Admin"))
+            {
+                <div style="float:right; margin-top:2%">
+                    <a class="btn btn-lg btn-primary " href="/Administration/Index">
+                        <i class="glyphicon glyphicon-cog pull-left"></i><span>&nbsp;Administration</span>
+                    </a>
+                </div>
+            }
+            @if (SessionPersister.UserRole.Equals("HeadMaster"))
+            {
+                <div style="float:right; margin-top:2%">
+                    <a class="btn btn-lg btn-primary " href="/Arrangement/Index">
+                        <i class="glyphicon glyphicon-tasks pull-left"></i><span>&nbsp;Arrangementer</span>
+                    </a>
+                </div>
+            }
+
+        </div>
+        <div class="row">
+            <div class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("Forside", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        @if (@SessionPersister.Username != null)
+                        {
+                            <button type="button" class="btn btn-default navbar-btn navbar-right">
+                                <a href="/Account/Logout">Log out</a>
+                            </button>
+                        }
+
+
+                        <div>
+                            @{
+                                var n = 0;
+                                var sum = 0;
+                                if (Session["cart"] != null)
+                                {
+                                    List<Item> cart = (List<Item>)Session["cart"];
+                                    n = cart.Count;
+                                    sum = cart.Sum(item => item.product.Price * item.quantity);
+                                }
+
+                            }
+
+
+                            <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 1%">
+                                <a href="/Cart/Index">
+                                    <i class="glyphicon glyphicon-shopping-cart">
+                                    </i><span> @sum dk</span>
+                                </a>
+                            </button>
+                        </div>
+
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kategori <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @Html.Action("NavbarCategoryPartialView", "Home")
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-------------------------------------------------------------------------------------------------------------------------------------->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- It can be fixed with bootstrap affix http://getbootstrap.com/javascript/#affix-->
+                    <div id="sidebar" class="well sidebar-nav">
+                        <h5>
+                            <i class="glyphicon glyphicon-home"></i>
+                            <small><b>Ordrer</b></small>
+                        </h5>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="/Profile/Index">Bestillings dage</a></li>
+                            <li><a href="/Profile/ViewCurrentOrders">Nuværende ordrer</a></li>
+                            <li><a href="/Profile/ViewPreviousOrders">Arkiverede ordrer</a></li>
+                        </ul>
+                        <h5>
+                            <i class="glyphicon glyphicon-home"></i>
+                            <small><b>KONTO</b></small>
+                        </h5>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#">Profil</a></li>
+                            <li><a href="#">Redigere konto</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <!-- Content Here -->
+                    <div class="container body-content">
+                        @RenderBody()
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        @*
+            <div class="panel-heading" style="margin-top:-1%; background-color:#FCFCFC;">
+                <h4>Profil: @SessionPersister.Username</h4>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="container-fluid" style="overflow:auto; float:left; min-width:25%;">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            <span class="glyphicon glyphicon-user">
+                                            </span> Konto
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="http://fb.com/moinakbarali">Din profil</a>
+                                        </li>
+                                        <li class="list-group-item"><span class="glyphicon glyphicon-flash text-success"></span><a href="http://fb.com/moinakbarali">Redigere profil</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                            <span class="glyphicon glyphicon-align-justify">
+                                            </span> Ordrer
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFour" class="panel-collapse collapse">
+                                    <div class="list-group">
+                                        <a href="/Profile/ViewOrders" class="list-group-item">
+                                            Alle ordrer
+                                        </a>
+                                        <a href="/Profile/ViewCurrentOrders" class="list-group-item">
+                                            Nuværende ordrer
+                                        </a>
+                                        <a href="/Profile/ViewPreviousOrders" class="list-group-item">
+                                            Arkiverde ordrer
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="container-fluid" style="overflow:auto">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Indhold</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="container body-content">
+
+                                    @RenderBody()
+                                    <hr />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        *@
+    </div>
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/fullcalendar")
+    @Scripts.Render("~/bundles/customs")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

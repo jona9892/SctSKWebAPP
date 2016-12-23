@@ -1,0 +1,109 @@
+﻿@model SctJSKClient.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "ProductDetails";
+}
+<style>
+    #full {
+        background: #efefef;
+    }
+
+    #left {
+        float: left;
+        overflow: auto;
+        margin-left: -2%;
+        min-width: 25%;
+    }
+
+    #header {
+        overflow: auto;
+        background-color: white;
+        margin-right: -20px;
+    }
+
+    .prod_title {
+        color: #428bca;
+        padding: 5px 0 0 15px;
+        font-size: 25px;
+    }
+
+    #products {
+        overflow: auto;
+        margin-top: 1%;
+    }
+
+    h4 {
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .price {
+        font-size: 30px;
+        margin: 0 auto;
+        color: #333;
+    }
+
+    .right {
+        float: right;
+        border-bottom: 2px solid #42a7f4;
+    }
+
+    .thumbnail {
+        opacity: 0.70;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+        overflow:hidden;
+    }
+
+        .thumbnail:hover {
+            opacity: 1.00;
+            box-shadow: 0px 0px 10px #4bc6ff;
+        }
+
+    .line {
+        margin-bottom: 5px;
+    }
+
+    #containerId {
+        float: left;
+    }
+</style>
+
+<div>
+    <div class="container" id="left">
+        <div class="container" style="background-color:#428bca; ">
+            <p style="color:white; margin-left:5%; margin-top:5%; font-size:20px; ">Kategorier</p>
+        </div>
+
+        <div class="list-group">
+            @foreach (var item in Model.Categories)
+            {
+                <a href="/Home/CategoryDetails/@item.Id" class="list-group-item">@item.Name</a>
+            }
+        </div>
+    </div>
+
+    <span class="thumbnail">
+        <h1>@Model.Product.Title</h1>
+        <img src="@Model.Product.Image" alt="...">
+        
+        <p style="font-size:20px">Beskrivelse: @Model.Product.Description</p>
+        <hr class="line">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <p class="price">Pris: @Model.Product.Price dkk</p>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <a href="/Cart/Buy/@Model.Product.Id" class="btn btn-primary right">LÆG I KURV <i class="glyphicon glyphicon-shopping-cart"></i></a> 
+            </div>
+
+        </div>
+    </span>
+
+
+</div>
+

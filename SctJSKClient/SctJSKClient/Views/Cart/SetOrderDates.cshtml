@@ -1,0 +1,111 @@
+﻿@model SctJSKClient.ViewModels.OrderDateViewModel
+
+@{
+    ViewBag.Title = "SetOrderDates";
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            jQuery.fn.extend({
+                live: function (event, callback) {
+                    if (this.selector) {
+                        jQuery(document).on(event, this.selector, callback);
+                    }
+                }
+            });
+
+            $('#addItem').click(function () {
+                $.ajax({
+                    url: this.href,
+                    cache: false,
+                    success: function (html) {
+                        $('#editorRows').append(html);
+                    }
+                });
+                return false;
+            });
+
+            $('a.deleteRow').live('click', function () {
+                $(this).parents('div.editorRow:first').remove();
+                return false;
+            });
+            $(document).on('focus', '.datepicker', function () {
+                $(this).datepicker({ dateFormat: 'dd-mm-yy', beforeShowDay: $.datepicker.noWeekends });
+            });
+        });
+    </script>
+
+}
+<style>
+    #addItem {
+        color: white;
+        text-decoration: none;
+    }
+
+    #addButton {
+        margin-top: 2%;
+        margin-left: 2%;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-info">
+
+            @using (Html.BeginForm("SetOrderDates", "Cart", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="panel-body">
+
+
+                    <div class="form-horizontal">
+                        <h4>Vælg bestillings datoer</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div id="editorRows">
+                                @foreach (var item in Model.dates)
+                                {
+                                    @Html.Partial("EditorRow", item);
+                                }
+                            </div>
+                            <button type="button" class="btn btn-primary" id="addButton">
+                                @Html.ActionLink("Tilføj dato", "BlankEditorRow", null, new { id = "addItem" })
+                            </button>
+
+                            
+                        </div>
+                       
+
+                    </div>
+                    
+                    <div style="display:block; text-align:left"><label>Vælg pause: </label></div>
+                    <div class="col-md-10" style="display:block;">
+                        
+                        <select class="form-control" id="dayoftime" name="dayoftime">
+                            @foreach (var item in Model.breaks)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+
+                    <hr>
+                </div>
+                <div class="form-group">
+                    <div style="margin-left: 2%">
+                        <input type="submit" value="Bestil &gt;" class="btn btn-success btn-block" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

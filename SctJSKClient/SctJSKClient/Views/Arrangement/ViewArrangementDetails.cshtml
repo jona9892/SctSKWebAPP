@@ -1,0 +1,52 @@
+﻿@model SctJSKClient.ViewModels.ArrangementProductViewModel
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h5><span class="glyphicon glyphicon-tasks"></span>Arrangement: @Model.Arrangement.Title</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="items">
+
+                    <div class="col-md-9">
+                        <table class="table table-striped">
+                            <tr>
+                                <td>
+                                    @foreach (var item in Model.ArrangementProducts)
+                                    {
+                                        <ul>
+                                            <li style="font-weight:bold">@item.Product.Title</li>
+                                            <li>Antal: @item.Quantity</li>
+                                        </ul>
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row text-center">
+                    <div class="col-xs-3">
+                        <button onclick="goBack()" class="btn btn-success btn-block"><span class="glyphicon glyphicon-chevron-left"></span>Tilbage</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

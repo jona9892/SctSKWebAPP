@@ -1,0 +1,35 @@
+﻿@model IEnumerable<DTOModel.ProductCount>
+
+
+@{
+    ViewBag.Title = "ViewOrderedProducts";
+}
+<div class="container">
+    <table class="table table-hover custab" style="background-color:white">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Antal</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.product.Image" alt="Product" style="width:100px;height:100px;">
+                </td>
+                <td>@item.product.Title</td>
+                <td>@item.NumberOfProduct</td>               
+            </tr>
+        }
+    </table>
+    <div class="panel-footer">
+        <div class="row text-center">
+            <div class="col-xs-3">
+                <a href="@Request.UrlReferrer" class="btn btn-success btn-block"><span class="glyphicon glyphicon-chevron-left"></span>Tilbage</a>
+            </div>
+        </div>
+    </div>
+</div>
+

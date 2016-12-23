@@ -1,0 +1,76 @@
+﻿@model SctJSKClient.ViewModels.SaleViewModel
+
+@{
+    ViewBag.Title = "GetSales";
+}
+@section scripts{
+    <script type="text/javascript">
+        $(document).on('focus', '.datepicker', function () {
+            $(this).datepicker({ dateFormat: 'dd-mm-yy', beforeShowDay: $.datepicker.noWeekends,closeOnSelect: false });
+        });
+    </script>
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 style="color:#3277b3">Vælg dag</h2>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("GetDailySales", "Sale", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    @Html.TextBoxFor(m => m.StartDate, new { @class = "datepicker" })
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;Se Salg</button>
+
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("GetMonthlySales", "Sale")'" style="float:right; overflow:auto"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;Se Månedlige Salg</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("GetWeeklySales", "Sale")'" style="float:right;  margin-right:1%;"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;Se Ugelige Salg</button>
+                </div>
+            </div>
+        }
+        
+
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel panel-heading" style="text-align:center"><h4 style="color:#ffffff; font-weight:bold">@Model.StartDate</h4></div>
+    <div class="form-group">
+        <img src="@Url.Action("CharterColumn", new { date = Model.StartDate})" alt="Chart" />
+
+        <img style="float:right" src="@Url.Action("CharterPie", new { date = Model.StartDate})" alt="Chart" />
+    </div>
+
+    <table class="table table-hover custab" style="background-color:white">
+        <thead>
+            <tr>
+                <th style="color:#428bca">Produkt</th>
+                <th style="color:#428bca">Pris pr. produkt</th>
+                <th style="color:#428bca">Total solgt</th>
+                <th style="color:#428bca">Samlede indtægter</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CountOfProducts)
+            {
+                <tr>
+                    <td>@item.product.Title</td>
+                    <td>@item.product.Price kr.</td>
+                    <td>@item.NumberOfProduct</td>
+                    <td>@item.TotalPrice kr.</td>
+                </tr>
+
+            }
+            <tr>
+                <td><b style="color:#3277b3">Total: </b></td>
+                <td></td>
+                <td><b style="color:#3277b3">@Model.TotalProduct</b></td>
+                <td><b style="color:#3277b3">@Model.Total kr.</b></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+

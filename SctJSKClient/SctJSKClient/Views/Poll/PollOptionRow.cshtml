@@ -1,0 +1,18 @@
+﻿@model DTOModel.PollOption
+
+<div class="pollOptionRow">
+    @using (Html.BeginCollectionItem("options"))
+    {
+        <table>
+            <tr>
+                <td>
+                    @Html.TextBoxFor(m => m.OptionText, new { @class = "form-control", placeholder = "Svar" })
+                    @Html.ValidationMessageFor(model => model.OptionText, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    <a href="#" class="deleteRow"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+        </table>
+    }
+</div>

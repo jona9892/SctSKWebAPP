@@ -1,0 +1,65 @@
+﻿<style>
+    td.fc-day.fc-past {
+        background-color: #EEEEEE;
+    }
+</style>
+@section scripts{
+    <script src='~/Scripts/locale/da.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                customButtons: {
+                    myCustomButton: {
+                        text: 'Tilføj',
+                        click: function() {
+                            window.location.href = '/Arrangement/Create/';
+                        }
+                    }
+                },
+                header: {
+                    left: 'prev,next today myCustomButton',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    window.location.href = '/Arrangement/ViewArrangementDetails/' + calEvent.id;
+                },
+                viewRender: function (view) {
+                    var now = new Date();
+                    var end = new Date();
+                    end.setMonth(now.getMonth() + 1);
+
+
+                    var cal_date_string = view.start.format('MM') + '/' + view.start.format('YYYY');
+                    var cur_date_string = now.getMonth() + '/' + now.getFullYear();
+                    var end_date_string = end.getMonth() + '/' + end.getFullYear();
+
+                    if (cal_date_string == cur_date_string) { jQuery('.fc-prev-button').addClass("fc-state-disabled"); }
+                    else { jQuery('.fc-prev-button').removeClass("fc-state-disabled"); }
+
+                    if (end_date_string == cal_date_string) { jQuery('.fc-next-button').addClass("fc-state-disabled"); }
+                    else { jQuery('.fc-next-button').removeClass("fc-state-disabled"); }
+                },
+                eventConstraint: {
+                    start: moment().format('YYYY-MM-DD'),
+                    end: '2100-01-01' // hard coded goodness unfortunately
+                },
+
+                theme: false,
+                //defaultView: 'agendaDay',
+                editable: true,
+                events: "/arrangement/getevents/",
+                weekends: false,
+
+            });
+        });
+
+
+    </script>
+}
+
+<div class="container" style="background-color:white">
+    <h1 class="well">Arrangementer</h1>
+    <div id="calendar" class="fc-content"></div>
+    <hr />
+</div>

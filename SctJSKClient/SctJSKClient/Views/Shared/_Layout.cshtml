@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+@using SctJSKClient.Security
+@using SctJSKClient.Models
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fullcalendar")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+
+
+<body style="background:#F8F8F8; padding:0px;">
+
+    <div class="container" style="background-color: #EFEFEF;">
+
+        <div class="page-header" style="margin-top:inherit; margin-bottom:inherit; overflow:auto">
+            <h1 style="font-weight: bold; float:left">
+                <font color="#42a7f4">@Html.ActionLink("Sct.Jacobi Kantine", "Index", "Home")</font>
+            </h1>
+
+            <div style="float:right; margin-top:2%">
+                <a class="btn btn-lg" href="/Profile/Index" style="">
+                    <i class="glyphicon glyphicon-user pull-left"></i><span>&nbsp;@SessionPersister.Username</span>
+                </a>
+            </div>
+            @if (SessionPersister.UserRole.Equals("Admin"))
+            {
+                <div style="float:right; margin-top:2%">
+                    <a class="btn btn-lg btn-primary " href="/Administration/Index">
+                        <i class="glyphicon glyphicon-cog pull-left"></i><span>&nbsp;Administration</span>
+                    </a>
+                </div>
+            }else
+            {
+
+            }
+            @if (SessionPersister.UserRole.Equals("HeadMaster"))
+            {
+                <div style="float:right; margin-top:2%">
+                    <a class="btn btn-lg btn-primary " href="/Arrangement/Index">
+                        <i class="glyphicon glyphicon-tasks pull-left"></i><span>&nbsp;Arrangementer</span>
+                    </a>
+                </div>
+            }else
+            {
+
+            }
+
+        </div>
+        <div class="row">
+            <div class="navbar navbar-default ">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("Forside", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        @if (@SessionPersister.Username != null)
+                        {
+                            <button type="button" class="btn btn-default navbar-btn navbar-right">
+                                <a href="/Account/Logout">Log out</a>
+                            </button>
+                        }else
+                        {
+
+                        }
+
+
+                        <div>
+                            @{
+                                var n = 0;
+                                var sum = 0;
+                                if (Session["cart"] != null)
+                                {
+                                    List<Item> cart = (List<Item>)Session["cart"];
+                                    n = cart.Count;
+                                    sum = cart.Sum(item => item.product.Price * item.quantity);
+                                }
+
+                            }
+
+
+                            <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 1%">
+                                <a href="/Cart/Index">
+                                    <i class="glyphicon glyphicon-shopping-cart">
+                                    </i><span> @sum dk</span>
+                                </a>
+                            </button>
+                        </div>
+
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kategori <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @Html.Action("NavbarCategoryPartialView", "Home")
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("Afstemninger", "Index", "Poll")</li>
+                        </ul>
+
+
+
+                        <form class="navbar-form navbar-right hidden-xs" role="search">
+                            <div class="form-group">
+                                <input placeholder="Søg efter produkter" type="search" class="form-control" id="txtAutocomplete" style="max-width:300px;" /><br />
+                            </div>
+                            @*<input type="button" class="btn btn-primary" id="btnsubmit" value="SØG" />*@
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="container body-content">
+
+
+            @RenderBody()
+            <hr />
+        </div>
+
+        <footer class="text-center">
+            <p>&copy; 2016 Sct.Jacobi Skole </p>
+        </footer>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/fullcalendar")
+    <link rel="stylesheet" href="~/Content/themes/smoothness/jquery.ui.all.css" />
+    @Scripts.Render("~/bundles/customs")
+    <script>
+        $(document).ready(function () {
+            $("#txtAutocomplete").autocomplete({
+                source: function (request, response) {
+                    //debugger;
+
+                    $.ajax({
+                        url: '@Url.Action("GetProductList", "Home")',
+                        datatype: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.Title,
+                                    value: item.Id,
+                                    image: item.Image,
+                                    price: item.Price,
+                                    category: item.Category.Name
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function (e, ui) {
+                    var url = "/Home/ProductDetails/" + ui.item.value;
+                    window.location.href = url;
+                }
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var inner_html =
+                     '<a style="margin-bottom:2%;"><img  style="height:60px; width:60px; float:left;margin-right:10px;" src="' +
+                     item.image + '"><ps style="color:#42a7f4; text-decoration: underline;">' + item.label +
+                     '</p><div>' +
+                     "Pris: " + '<b>'+ item.price + " kr" + '</b>' + '</div></div></div></a>';
+                return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append(inner_html)
+                    .appendTo(ul);
+            };
+            $("#btnsubmit").click(function () {
+                var val = $("#txtAutocomplete").val();
+                alert("You selected: " + val);
+
+            });
+        });
+    </script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

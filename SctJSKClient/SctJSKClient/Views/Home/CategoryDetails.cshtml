@@ -1,0 +1,157 @@
+﻿@model SctJSKClient.ViewModels.CategoryDetailsViewModel
+@using SctJSKClient.Security
+@{
+    ViewBag.Title = "CategoryDetails";
+}
+<style>
+    #full {
+        background: #efefef;
+    }
+
+    #left {
+        float: left;
+        overflow: auto;
+        margin-left: -2%;
+        min-width: 25%;
+    }
+
+    #header {
+        overflow: auto;
+        background-color: white;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        padding-left: 2%;
+        margin-left: 1%;
+    }
+
+    .prod_title {
+        color: #428bca;
+        padding: 5px 0 0 15px;
+        font-size: 25px;
+    }
+
+    #products {
+        overflow: auto;
+        margin-top: 1%;
+    }
+
+    h4 {
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .price {
+        font-size: 12px;
+        margin: 0 auto;
+        color: #333;
+    }
+
+    .right {
+        float: right;
+        border-bottom: 2px solid #4B8E4B;
+    }
+
+    .thumbnail {
+        opacity: 0.70;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+        .thumbnail:hover {
+            opacity: 1.00;
+            box-shadow: 0px 0px 10px #4bc6ff;
+        }
+
+    .line {
+        margin-bottom: 5px;
+    }
+
+    #containerId {
+        float: left;
+    }
+</style>
+
+<div class="col-sm-4 col-md-3 hidden-xs">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Kategorier</h2>
+        </div>
+
+        <div class="list-group">
+            @foreach (var item in Model.Categories)
+            {
+                <a href="/Home/CategoryDetails/@item.Id" class="list-group-item">@item.Name</a>
+            }
+        </div>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-8 col-md-9">
+    <div class="panel panel-default">
+        <p class="prod_title">@Model.Category.Name</p>
+        <p style="padding-left:2%">@Model.Category.Description-</p>
+        <div class="clear"></div>
+    </div>
+
+    <div id="products">
+        @if (SessionPersister.UserRole == "Student")
+            {
+                foreach (var product in Model.Products)
+                {
+                    if (product.availableforStudents == true)
+                    {
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 2%; overflow:auto">
+                        <div class="thumbnail" style="max-width:180px; float:left; width:100%;">
+
+                            <img src="@product.Image" alt="...">
+                            <a href="/Home/ProductDetails/@product.Id"><h4>@product.Title</h4></a>
+                            <p>@product.Description</p>
+
+                            <hr class="line">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <p class="price">@product.Price dkk</p>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <a href="/Cart/Buy/@product.Id" class="btn btn-primary right"><i class="glyphicon glyphicon-shopping-cart"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        }
+        else
+        {
+            foreach (var product in Model.Products)
+            {
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 2%; overflow:auto">
+                    <div class="thumbnail" style="max-width:180px; float:left; width:100%;">
+
+                        <img src="@product.Image" alt="...">
+                        <a href="/Home/ProductDetails/@product.Id"><h4>@product.Title</h4></a>
+                        <p>@product.Description</p>
+
+                        <hr class="line">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <p class="price">@product.Price dkk</p>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+
+                                <a href="/Cart/Buy/@product.Id" class="btn btn-primary right"><i class="glyphicon glyphicon-shopping-cart"></i></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+

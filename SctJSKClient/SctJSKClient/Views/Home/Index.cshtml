@@ -1,0 +1,96 @@
+﻿@model SctJSKClient.ViewModels.HomePageViewModel
+
+
+<style>
+    .panel-body {
+        padding: 15px;
+    }
+
+    hr {
+        height: 0.5px;
+        margin: 10px 0;
+    }
+</style>
+<div class="col-sm-4 col-md-3 hidden-xs">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Produkter</h2>
+        </div>
+        <div class="panel-body">
+            @foreach (var cat in Model.Categories)
+            {
+                <a href="/Home/CategoryDetails/@cat.Id" style="color:#176C9E">@cat.Name</a>
+                foreach (var product in cat.Product)
+                {
+                    <ul style="margin-top:5px;">
+                        <li style="line-height: 0.8em;">
+                            <a href="/Home/ProductDetails/@product.Id">@product.Title</a>
+                        </li>
+                    </ul>
+                }
+                <hr>
+            }
+        </div>
+    </div>
+</div>
+
+
+@foreach (var cat in Model.Categories)
+{
+    <div class="col-xs-12 col-sm-8 col-md-9" style="float:right; overflow:auto;">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">@cat.Name produkter</h2>
+            </div>
+            <div class="panel-body">
+                @foreach (var product in cat.Product.Take(3))
+                {
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <img style="height:100px; width:100px;" src="@product.Image" alt="...">
+                        </div>
+                        <div class="col-md-6 col-sm-4">
+                            <b>
+                                <a href="/Home/ProductDetails/@product.Id">@product.Title</a>
+                            </b>
+                            <p>
+                                @product.Description
+                            </p>
+                        </div>
+                        <div class="col-md-3 col-sm-5">
+                            <div class="h3" style="margin-top:0px;">
+                                <b>@product.Price kr.</b>
+                            </div>
+                            <a href="/Cart/Buy/@product.Id" class="btn btn-success right"><i class="glyphicon glyphicon-shopping-cart pull-left"></i>Læg i kurv</a>
+                        </div>
+                    </div>
+                    <hr>
+                }
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row well" style="clear:both; border: 1px solid #b6b4ae;">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam id nisi posuere, gravida arcu vitae, cursus erat. Sed non mauris vitae neque interdum maximus id sed magna. In a odio purus. Sed venenatis diam dolor, lobortis eleifend ipsum volutpat et. Nam tempus, nulla a imperdiet luctus,
+</div>
+
+@*
+    <div class="container" id="left">
+        <div class="container" style="background-color:#428bca; ">
+            <p style="color:white; margin-left:5%; margin-top:5%; font-size:20px; ">Produkter</p>
+        </div>
+        <div style="overflow:auto; float: left;">
+            @using (Html.BeginForm())
+                {
+                <div class="form-horizonthal">
+                    <div class="form-group">
+                        <input placeholder="Søg..." type="text" class="form-control" id="txtAutocomplete" style="max-width:300px;" /><br />
+                        <input type="button" class="btn btn-default" id="btnsubmit" value="get Value" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+*@

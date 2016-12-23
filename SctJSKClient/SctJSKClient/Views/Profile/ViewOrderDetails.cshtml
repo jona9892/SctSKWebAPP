@@ -1,0 +1,73 @@
+﻿@model SctJSKClient.Models.UserOrderModel
+
+@{
+    ViewBag.Title = "ViewOrderDetails";
+}
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h5><span class="glyphicon glyphicon-shopping-cart"></span>Ordre: @Model.order.Id</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="items">
+
+                    <div class="col-md-9">
+                        <table class="table table-striped">
+                            <tr>
+                                <td>
+                                    @foreach (var item in Model.OrderDetails)
+                                    {
+                                        <ul>
+                                            @{
+                                                var ps = @item.Quantity * @item.Price;
+                                            }
+                                            <li style="font-weight:bold">@item.Product.Title</li>
+                                            <li>Antal: @item.Quantity</li>
+                                            <li>Pris per styk: @item.Price dk</li>
+                                            <li>Pris i alt:@ps dk</li>
+                                        </ul>
+                                                }
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div style="text-align: center;">
+                            @{
+                                var sum = Model.OrderDetails.Sum(x => x.Quantity * x.Product.Price);
+                            }
+                            <h3>Ordre Total</h3>
+                            <h3><span style="color:green;">@sum dk</span></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row text-center">
+                    <div class="col-xs-3">
+                        <button onclick="goBack()" class="btn btn-success btn-block"><span class="glyphicon glyphicon-chevron-left"></span>Tilbage</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
