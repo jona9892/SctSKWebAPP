@@ -11,11 +11,19 @@ namespace Sct.JSKDAL.DomainModel
     public class Product { 
         [Key]
         public int Id { get; set; }
+        [Required]
+        [StringLength(12)]
         public string Title { get; set; }
+        [Required]
         public string Image { get; set; }
+        [Required]
         public int Price { get; set; }
+        [Required]
+        [StringLength(50)]
         public string Description { get; set; }
+        [Required]
         public bool availableforStudents { get; set; }
+        [Required]
         public bool onlyForHeadmasters { get; set; }
 
         [ForeignKey("Category")]

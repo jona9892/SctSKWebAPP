@@ -12,7 +12,11 @@ namespace Sct.JSKDAL.Entities
         [Key]
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(50)]
         public string Question { get; set; }
+
+        [Required]
         public bool Active { get; set; }
         public virtual ICollection<PollOption> PollOptions { get; set; }
     }

@@ -13,7 +13,7 @@ namespace SctJSKClient.Controllers
     [CustomAuthorize(Roles = "Admin,Student,Teacher,HeadMaster")]
     public class HomeController : Controller
     {
-        private readonly Facade facade = new Facade();
+        private Facade facade = new Facade();
         public ActionResult Index()
         {
             var categories = facade.GetCategoryService().GetAll().ToList();

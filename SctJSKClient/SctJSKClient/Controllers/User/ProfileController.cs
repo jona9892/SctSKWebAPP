@@ -145,6 +145,7 @@ namespace SctJSKClient.Controllers
         public ActionResult Delete(int id)
         {
             int userid = int.Parse(SessionPersister.UserId);
+
             facade.GetOrderService().Delete(id, userid);
             return Redirect(Request.UrlReferrer.ToString());
         }

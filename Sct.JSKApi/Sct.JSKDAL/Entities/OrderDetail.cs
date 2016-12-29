@@ -21,7 +21,12 @@ namespace Sct.JSKDAL.DomainModel
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
 
-        public int Quantity { get; set; }     
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Must be positive")]
+        public int Quantity { get; set; }
+
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Must be positive")]
         public int Price { get; set; }
     }
 }

@@ -19,7 +19,6 @@ namespace SctJSKApiTest.DomainModelTest
             var order = new Order
             {
                 Id = 1,
-                status = true,
                 OrderDate = bd,
                 TotalPrice = 120,
                 OrderCreated = bd,

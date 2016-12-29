@@ -27,12 +27,11 @@ namespace Sct.JSKDAL.Repository.Implementation
             return newArrangement;
         }
 
-        public Arrangement Delete(Arrangement a)
+        public void Delete(Arrangement a)
         {
             var arrangement = ctx.Arrangements.FirstOrDefault(x => x.Id == a.Id);
             ctx.Arrangements.Remove(arrangement);
             ctx.SaveChanges();
-            return a;
         }
 
         public Arrangement Read(int id)
@@ -47,7 +46,7 @@ namespace Sct.JSKDAL.Repository.Implementation
             return ctx.Arrangements.Include("Products").ToList();
         }
 
-        public Arrangement Update(Arrangement a)
+        public void Update(Arrangement a)
         {
             throw new NotImplementedException();
         }

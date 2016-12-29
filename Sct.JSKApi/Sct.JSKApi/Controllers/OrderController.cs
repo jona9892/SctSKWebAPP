@@ -23,52 +23,58 @@ namespace Sct.JSKApi.Controllers
             bo = new BLLOrder(new DBContextSctJSK());
         }
         
-        public Order PostOrder(Order order)
+        public HttpResponseMessage PostOrder(Order order)
         {
-            return facade.GetOrderRepository().Add(order);
+            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetOrderRepository().Add(order));
+            return response;
         }
 
-        public Order GetOrder(int id)
+        public HttpResponseMessage GetOrder(int id)
         {
-            return facade.GetOrderRepository().Read(id); 
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetOrderRepository().Read(id));
+            return response;
         }
 
-        public IEnumerable<Order> GetOrder()
+        public HttpResponseMessage GetOrder()
         {
-            return facade.GetOrderRepository().ReadAll();
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetOrderRepository().ReadAll());
+            return response;
         }
 
         [Route("api/order/{orderdate}/users")]
         [HttpGet]
-        public IEnumerable<User> GetOrderedCustomers(string orderdate)
+        public HttpResponseMessage GetOrderedCustomers(string orderdate)
         {
-            return facade.GetOrderRepository().GetAllOrderedCustomers(orderdate);
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetOrderRepository().GetAllOrderedCustomers(orderdate));
+            return response;
         }
 
         [Route("api/order/{orderdate}/{id}/users")]
         [HttpGet]
-        public Order GetOrderedCustomers(string orderdate, int id)
+        public Order HttpResponseMessage(string orderdate, int id)
         {
             return facade.GetOrderRepository().GetAllOrderedCustomerDetail(orderdate, id);
         }
 
         [Route("api/order/{orderdate}/products")]
         [HttpGet]
-        public IEnumerable<ProductCount> GetOrderedProducts(string orderdate)
+        public HttpResponseMessage GetOrderedProducts(string orderdate)
         {
-            return bo.CountOrderedProductsByDate(orderdate);
+            var response = Request.CreateResponse(HttpStatusCode.OK, bo.CountOrderedProductsByDate(orderdate));
+            return response;
         }
 
-        public void DeleteOrder(int orderid, int userid)
+        public HttpResponseMessage DeleteOrder(int orderid, int userid)
         {
-            bo.ConfirmOrder(orderid, userid);
+            return bo.ConfirmOrder(orderid, userid);
         }
 
         [Route("api/order/{startdate}/{enddate}/products")]
         [HttpGet]
-        public IEnumerable<ProductCount> GetOrderedProductsByDates(string startdate, string enddate)
+        public HttpResponseMessage GetOrderedProductsByDates(string startdate, string enddate)
         {
-            return bo.CountOrderedProductsByDates(startdate, enddate);
+            var response = Request.CreateResponse(HttpStatusCode.OK, bo.CountOrderedProductsByDates(startdate, enddate));
+            return response;
         }
     }
 }

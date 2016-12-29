@@ -23,8 +23,11 @@ namespace Sct.JSKDAL.DomainModel
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime OrderDate { get; set; }
 
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Must be positive")]
         public int TotalPrice { get; set; }
 
+        [Required]
         public string TimeOfDay { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }

@@ -66,6 +66,7 @@ namespace SctJSKClient.Controllers
 
         // POST: Category/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description")]Category category)
         {
 

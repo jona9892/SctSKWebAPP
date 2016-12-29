@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using Sct.JSKDAL.Context;
+using System.Net;
+using System.Net.Http;
 
 namespace Sct.JSKApi.BLL
 {
@@ -24,8 +26,7 @@ namespace Sct.JSKApi.BLL
             List<ProductCount> productCounts = new List<ProductCount>();
             List<Order> getAllOrders = facade.GetOrderRepository().GetOrderedProductsByOrder(orderdate).ToList();
             foreach (var order in getAllOrders)
-            {
-                
+            {                
                 foreach (var od in order.OrderDetails)
                 {
                     ProductCount productCount = new ProductCount();
@@ -74,19 +75,23 @@ namespace Sct.JSKApi.BLL
             return productCounts;
         }
 
-        public void ConfirmOrder(int orderid, int userid)
+        public HttpResponseMessage ConfirmOrder(int orderid, int userid)
         {
             Order order = facade.GetOrderRepository().Read(orderid);
+            HttpResponseMessage response; 
             DateTime now = DateTime.Now;
             DateTime deadline = order.OrderDate;
             if(now > deadline.AddHours(-9) && now < deadline)
             {
-                
+                response = new HttpResponseMessage(System.Net.HttpStatusCode.Conflict);
             }
             else
             {
                 facade.GetOrderRepository().Delete(userid, order);
+                response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                return response;
             }
+            return null;
             
         }
     }

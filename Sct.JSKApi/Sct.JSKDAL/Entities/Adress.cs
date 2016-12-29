@@ -12,8 +12,15 @@ namespace Sct.JSKDAL.DomainModel
     {
         [Key, ForeignKey("User")]
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(30)]
         public string AdressLine { get; set; }
+
+        [Required]
+        [StringLength(30)]
         public string City { get; set; }
+        [Required]
         public int ZipCode { get; set; }
 
         public virtual User User { get; set; }

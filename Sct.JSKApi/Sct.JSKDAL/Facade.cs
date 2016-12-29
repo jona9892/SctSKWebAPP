@@ -25,7 +25,7 @@ namespace Sct.JSKDAL
             return new UserRepository(ctx);
         }
 
-        public IProductRepository<Product> GetProductRepository()
+        public IProductRepository GetProductRepository()
         {
             return new ProductRepository(ctx);
         }

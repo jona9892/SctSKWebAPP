@@ -64,7 +64,6 @@ C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKCl
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\SctJSKClient.dll
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\SctJSKClient.pdb
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\Antlr3.Runtime.dll
-C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\DTOModel.dll
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\GatewayService.dll
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\Microsoft.Web.Infrastructure.dll
@@ -80,7 +79,6 @@ C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKCl
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\System.Web.WebPages.dll
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\System.Web.WebPages.Razor.dll
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\WebGrease.dll
-C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\DTOModel.pdb
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\GatewayService.pdb
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\SctJSKClient\bin\System.Web.Helpers.xml

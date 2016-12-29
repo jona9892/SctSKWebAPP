@@ -27,24 +27,25 @@ namespace SctJSKApiTest.RepositoryTest
             var category = new Category
             {
                 Id = -1,
-                Name = "BRød",
+                Name = "Brød",
                 Description = "Godt Brøde"
             };
-            facade.GetCategoryRepository().Add(category);
 
             var product = new Product()
             {
                 Id = -1,
-                Title = "Brød",
+                Title = "Pizza",
+                Price = 100,
                 Category = category
             };
-
             facade.GetProductRepository().Add(product);
 
             Assert.IsTrue(product.Id > 0);
-
             var product2 = facade.GetProductRepository().Read(product.Id);
             Assert.AreEqual(product, product2);
+            Assert.AreEqual(product2.Title, "Pizza");
+            Assert.AreEqual(product2.Category, category);
+            Assert.AreEqual(product2.Price, 100);
         }
 
         [Test]

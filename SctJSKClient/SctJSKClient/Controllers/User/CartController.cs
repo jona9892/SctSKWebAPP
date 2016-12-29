@@ -28,7 +28,7 @@ namespace SctJSKClient.Controllers
             if(Session["cart"] == null)
             {
                 List<Item> cart = new List<Item>();
-                cart.Add(new Models.Item() {
+                cart.Add(new Item() {
                     product = facade.GetProductService().Get(id),
                     quantity = 1
                 });
@@ -41,7 +41,7 @@ namespace SctJSKClient.Controllers
 
                 if(index == -1)
                 {
-                    cart.Add(new Models.Item()
+                    cart.Add(new Item()
                     {
                         product = facade.GetProductService().Get(id),
                         quantity = 1
@@ -50,7 +50,6 @@ namespace SctJSKClient.Controllers
                 {
                     cart[index].quantity = cart[index].quantity + 1;
                 }
-
                 
                 Session["cart"] = cart;
             }

@@ -44,6 +44,7 @@ namespace SctJSKClient.Controllers
         }
         
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(ArrangementViewModel avm)
         {
             if (ModelState.IsValid)
@@ -79,6 +80,7 @@ namespace SctJSKClient.Controllers
 
         // POST: Aftale/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(Arrangement arrangement)
         {
             try

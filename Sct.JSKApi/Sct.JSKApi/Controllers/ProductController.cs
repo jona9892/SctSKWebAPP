@@ -37,7 +37,9 @@ namespace Sct.JSKApi.Controllers
 
         public HttpResponseMessage PostProduct(Product p)
         {
-            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetProductRepository().Add(p));
+            var product = facade.GetProductRepository().Add(p);
+
+            var response = Request.CreateResponse(HttpStatusCode.Created, product);
             return response;
         }
 

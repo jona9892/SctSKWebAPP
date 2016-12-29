@@ -46,10 +46,9 @@ namespace Sct.JSKDAL.Repository.Implementation
             return ctx.Orders.Include("OrderDetails").ToList();
         }
 
-        public Order Update(Order o, int id)
+        public void Update(Order o, int id)
         {
-            var orderDB = ctx.Orders.FirstOrDefault(order => order.Id == o.Id && order.UserId == id);
-            return orderDB;
+           // var orderDB = ctx.Orders.FirstOrDefault(order => order.Id == o.Id && order.UserId == id);
         }
 
         public IEnumerable<User> GetAllOrderedCustomers(string orderdate)

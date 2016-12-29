@@ -12,10 +12,15 @@ namespace Sct.JSKDAL.DomainModel
         [Key]
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(15)]
         public string Title { get; set; }
 
+        [Required]
+        [StringLength(50)]
         public string Description { get; set; }
 
+        [Required]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Date { get; set; }
 

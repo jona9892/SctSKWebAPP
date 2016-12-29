@@ -17,6 +17,8 @@ namespace Sct.JSKDAL.Entities
         public int PollId { get; set; }
         public virtual Poll Poll { get; set; }
 
+        [Required]
+        [StringLength(15)]
         public string OptionText { get; set; }
     }
 }

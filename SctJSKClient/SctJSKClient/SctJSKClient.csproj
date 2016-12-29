@@ -148,7 +148,7 @@
     <Compile Include="Controllers\Admin\AdministrationController.cs" />
     <Compile Include="Controllers\Admin\ArrangementController.cs" />
     <Compile Include="Controllers\Admin\SaleController.cs" />
-    <Compile Include="Controllers\User\PollController.cs" />
+    <Compile Include="Controllers\Admin\PollController.cs" />
     <Compile Include="Controllers\User\CartController.cs" />
     <Compile Include="Controllers\ManageAccountController.cs" />
     <Compile Include="Controllers\User\ProfileController.cs" />
@@ -523,6 +523,7 @@
     <Content Include="Views\Sale\GetDailySales.cshtml" />
     <Content Include="Views\Sale\GetWeeklySales.cshtml" />
     <Content Include="Views\Sale\GetMonthlySales.cshtml" />
+    <Content Include="Views\Profile\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -535,13 +536,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DTOModel\Entities.csproj">
-      <Project>{60b2f74c-b45e-459c-83ac-4009f4069e4c}</Project>
-      <Name>Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GatewayService\GatewayService.csproj">
+    <ProjectReference Include="..\GatewayService\Proxy.csproj">
       <Project>{C0567724-58A5-4E82-A5EA-93F21984F3AC}</Project>
-      <Name>GatewayService</Name>
+      <Name>Proxy</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

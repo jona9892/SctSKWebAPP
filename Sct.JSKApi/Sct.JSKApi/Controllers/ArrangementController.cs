@@ -22,22 +22,25 @@ namespace Sct.JSKApi.Controllers
             ba = new BLLArrangement(new DBContextSctJSK());
         }
 
-        public IEnumerable<Arrangement> GetArrangements()
+        public HttpResponseMessage GetArrangements()
         {
-            return facade.GetArrangementRepository().ReadAll();
+            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetArrangementRepository().ReadAll());
+            return response;
         }
 
-        public Arrangement GetArrangement(int id)
+        public HttpResponseMessage GetArrangement(int id)
         {
-            return facade.GetArrangementRepository().Read(id);
+            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetArrangementRepository().Read(id));
+            return response;
         }
 
-        public Arrangement PostArrangement(Arrangement p)
+        public HttpResponseMessage PostArrangement(Arrangement p)
         {
-            return facade.GetArrangementRepository().Add(p);
+            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetArrangementRepository().Add(p));
+            return response;
         }
 
-        public Arrangement PutArrangement(int id, Arrangement p)
+        public void PutArrangement(int id, Arrangement p)
         {
             if (p == null)
             {
@@ -47,7 +50,6 @@ namespace Sct.JSKApi.Controllers
 
 
             facade.GetArrangementRepository().Update(p);
-            return p;
         }
 
         public void DeleteArrangement(int id)

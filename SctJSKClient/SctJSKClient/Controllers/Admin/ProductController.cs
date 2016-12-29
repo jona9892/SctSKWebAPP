@@ -45,7 +45,6 @@ namespace SctJSKClient.Controllers
                     products = products.OrderBy(s => s.Title);
                     break;
             }
-
             return View(products);
         }
 
@@ -62,6 +61,7 @@ namespace SctJSKClient.Controllers
 
         // POST: Aftale/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Product product)
         {
             if (ModelState.IsValid)
@@ -88,6 +88,7 @@ namespace SctJSKClient.Controllers
 
         // POST: Aftale/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Product product)
         {
             try
@@ -121,6 +122,7 @@ namespace SctJSKClient.Controllers
 
         // POST: Aftale/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(Product product)
         {
             try

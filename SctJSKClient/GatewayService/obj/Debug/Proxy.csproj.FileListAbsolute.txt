@@ -1,0 +1,16 @@
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\obj\Debug\Proxy.csprojResolveAssemblyReference.cache
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\obj\Debug\GatewayService.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\obj\Debug\GatewayService.pdb
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\GatewayService.dll.config
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\GatewayService.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\GatewayService.pdb
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\BeginCollectionItem.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\EntityFramework.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\Newtonsoft.Json.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\System.Net.Http.Extensions.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\System.Net.Http.Primitives.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\EntityFramework.xml
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\SctJSKClient\GatewayService\bin\Debug\Newtonsoft.Json.xml

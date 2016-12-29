@@ -97,7 +97,6 @@ namespace SctJSKApiTest.BLL
                 OrderDate = orderdate,
                 OrderCreated = DateTime.Now,
                 TotalPrice = 120,
-                status = false,
                 User = user
             };
             var order2 = new Order
@@ -106,7 +105,6 @@ namespace SctJSKApiTest.BLL
                 OrderDate = orderdate,
                 OrderCreated = DateTime.Now,
                 TotalPrice = 50,
-                status = true, 
                 User = user
             };
             facade.GetOrderRepository().Add(order1);

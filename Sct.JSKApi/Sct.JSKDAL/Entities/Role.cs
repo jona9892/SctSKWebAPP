@@ -11,7 +11,11 @@ namespace Sct.JSKDAL.DomainModel
     {
         [Key]
         public int Id { get; set; }
+        [Required]
+        [StringLength(12)]
         public string Title { get; set; }
+        [Required]
+        [StringLength(20)]
         public string Description { get; set; }
         //public virtual ICollection<UserRole> Users { get; set; }
         public virtual ICollection<User> Users { get; set; }

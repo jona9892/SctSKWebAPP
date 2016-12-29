@@ -21,6 +21,7 @@ namespace Sct.JSKDAL.DomainModel
         public int ArrangementId { get; set; }
         public virtual Arrangement Arrangement { get; set; }
 
+        [Required]
         public int Quantity { get; set; }
     }
 }

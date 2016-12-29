@@ -24,17 +24,19 @@ namespace Sct.JSKApi.Controllers
             return response;
         }
 
-        public Poll GetPoll(int id)
+        public HttpResponseMessage GetPoll(int id)
         {
-            return facade.GetPollRepository().Read(id);
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetPollRepository().Read(id));
+            return response;
         }
 
-        public Poll PostPoll(Poll p)
+        public HttpResponseMessage PostPoll(Poll p)
         {
-            return facade.GetPollRepository().Add(p);
+            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetPollRepository().Add(p));
+            return response;
         }
 
-        public Poll PutPoll(int id, Poll p)
+        public void PutPoll(int id, Poll p)
         {
             if (p == null)
             {
@@ -44,7 +46,6 @@ namespace Sct.JSKApi.Controllers
 
 
             facade.GetPollRepository().Update(p);
-            return p;
         }
 
         public void DeletePoll(int id)

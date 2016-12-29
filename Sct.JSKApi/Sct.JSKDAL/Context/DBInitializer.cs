@@ -169,7 +169,7 @@ namespace Sct.JSKDAL.Context
             var product2 = new Product
             {
                 Id = 2,
-                Title = "Mælk",
+                Title = "MiniMælk",
                 Price = 20,
                 Description = "Arla mini mælk",
                 Image = "https://skolemad.dk/lev61/ill/b107.jpg",
@@ -180,10 +180,10 @@ namespace Sct.JSKDAL.Context
             var product3 = new Product
             {
                 Id = 3,
-                Title = "Sandwhich",
+                Title = "Pizza",
                 Price = 20,
                 Description = "Lovely sandwich",
-                Image = "http://thesandwichguide.com/wp-content/uploads/sandwich.jpg",
+                Image = "http://www.cicis.com/media/1138/pizza_trad_pepperoni.png",
                 CategoryId = 1,
                 availableforStudents = true,
                 onlyForHeadmasters = false
@@ -215,10 +215,10 @@ namespace Sct.JSKDAL.Context
             var product6 = new Product
             {
                 Id = 6,
-                Title = "Mælk",
+                Title = "SædMælk",
                 Price = 20,
                 Description = "Arla mini mælk",
-                Image = "https://skolemad.dk/lev61/ill/b107.jpg",
+                Image = "https://www.arla.dk/globalassets/arla-dk/products/all-our-brands/arla/skolem_lk-s_dm_lk.png?preset=product-desktop",
                 CategoryId = 2,
                 availableforStudents = true,
                 onlyForHeadmasters = false
@@ -238,10 +238,10 @@ namespace Sct.JSKDAL.Context
             var product8 = new Product
             {
                 Id = 8,
-                Title = "Mælk",
+                Title = "LetMælk",
                 Price = 20,
                 Description = "Arla mini mælk",
-                Image = "https://skolemad.dk/lev61/ill/b107.jpg",
+                Image = "https://www.arla.dk/globalassets/arla-dk/products/all-our-brands/arla/skolem_lk-letm_lk.png?preset=product-desktop",
                 CategoryId = 2,
                 availableforStudents = true,
                 onlyForHeadmasters = false
@@ -261,10 +261,10 @@ namespace Sct.JSKDAL.Context
             var product10 = new Product
             {
                 Id = 10,
-                Title = "Mælk",
+                Title = "SkummetMælk",
                 Price = 20,
                 Description = "Arla mini mælk",
-                Image = "https://skolemad.dk/lev61/ill/b107.jpg",
+                Image = "https://www.arla.dk/globalassets/arla-dk/products/all-our-brands/arla/skolem_lk-skummetm_lk.png?preset=product-desktop",
                 CategoryId = 2,
                 availableforStudents = true,
                 onlyForHeadmasters = false

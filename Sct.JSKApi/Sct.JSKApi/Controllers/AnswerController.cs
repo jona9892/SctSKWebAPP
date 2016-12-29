@@ -21,30 +21,34 @@ namespace Sct.JSKApi.Controllers
             ba = new BLLAnswer(new DBContextSctJSK());
         }
 
-        public Answer PostAnswer(Answer p)
+        public HttpResponseMessage PostAnswer(Answer p)
         {
-            return facade.GetAnswerRepository().Add(p);
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetAnswerRepository().Add(p));
+            return response;
         }
 
         [Route("api/Answer/{id}/user")]
         [HttpGet]
-        public List<Answer> GetAllByUser(int id)
+        public HttpResponseMessage GetAllByUser(int id)
         {
-            return facade.GetAnswerRepository().ReadAllByUser(id);
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetAnswerRepository().ReadAllByUser(id));
+            return response;
         }
 
         [Route("api/Answer/{id}/polls")]
         [HttpGet]
-        public List<Poll> GetAllUnAnsweredByUser(int id)
+        public HttpResponseMessage GetAllUnAnsweredByUser(int id)
         {
-            return ba.GetUnAnsweredPolls(id);
+            var response = Request.CreateResponse(HttpStatusCode.OK, ba.GetUnAnsweredPolls(id));
+            return response;
         }
 
         [Route("api/Answer/{id}/results")]
         [HttpGet]
-        public List<PollResult> GetResultsOfPoll(int id)
+        public HttpResponseMessage GetResultsOfPoll(int id)
         {
-            return facade.GetAnswerRepository().ReadResults(id);
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetAnswerRepository().ReadResults(id));
+            return response;
         }
     }
 }

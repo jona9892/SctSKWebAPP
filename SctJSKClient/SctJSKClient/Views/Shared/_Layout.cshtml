@@ -112,8 +112,7 @@
                         <form class="navbar-form navbar-right hidden-xs" role="search">
                             <div class="form-group">
                                 <input placeholder="Søg efter produkter" type="search" class="form-control" id="txtAutocomplete" style="max-width:300px;" /><br />
-                            </div>
-                            @*<input type="button" class="btn btn-primary" id="btnsubmit" value="SØG" />*@
+                            </div>                            
                         </form>
 
                     </div>
@@ -124,8 +123,6 @@
 
 
         <div class="container body-content">
-
-
             @RenderBody()
             <hr />
         </div>
@@ -146,8 +143,6 @@
         $(document).ready(function () {
             $("#txtAutocomplete").autocomplete({
                 source: function (request, response) {
-                    //debugger;
-
                     $.ajax({
                         url: '@Url.Action("GetProductList", "Home")',
                         datatype: "json",
@@ -171,10 +166,12 @@
                     var url = "/Home/ProductDetails/" + ui.item.value;
                     window.location.href = url;
                 }
-            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+            }).data("ui-autocomplete")._enderItem = function (ul, item) {
                 var inner_html =
-                     '<a style="margin-bottom:2%;"><img  style="height:60px; width:60px; float:left;margin-right:10px;" src="' +
-                     item.image + '"><ps style="color:#42a7f4; text-decoration: underline;">' + item.label +
+                     '<a style="margin-bottom:2%;">'
+                     + '<img  style="height:60px; width:60px; float:left;margin-right:10px;" src="' +
+                     item.image + '"><ps style="color:#42a7f4; text-decoration: underline;">'
+                     + item.label +
                      '</p><div>' +
                      "Pris: " + '<b>'+ item.price + " kr" + '</b>' + '</div></div></div></a>';
                 return $("<li></li>")
@@ -182,11 +179,6 @@
                     .append(inner_html)
                     .appendTo(ul);
             };
-            $("#btnsubmit").click(function () {
-                var val = $("#txtAutocomplete").val();
-                alert("You selected: " + val);
-
-            });
         });
     </script>
     @Scripts.Render("~/bundles/bootstrap")

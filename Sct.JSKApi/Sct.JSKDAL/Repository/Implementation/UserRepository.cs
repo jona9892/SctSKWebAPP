@@ -134,13 +134,11 @@ namespace Sct.JSKDAL.Repository.Implementation
 
         }
 
-        public Order DeleteOrderByUser(Order o, int id)
+        public void DeleteOrderByUser(Order o, int id)
         {
             var order = ctx.Orders.FirstOrDefault(x => x.Id == o.Id && x.User.Id == id);
             ctx.Orders.Remove(order);
             ctx.SaveChanges();
-            return o;
-
         }
     }
 }
