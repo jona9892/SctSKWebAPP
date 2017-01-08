@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Sct.JSKDAL;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using SctJSKApiTest.Context;
 using System;
 using System.Collections.Generic;
@@ -28,14 +28,18 @@ namespace SctJSKApiTest.RepositoryTest
             {
                 Id = -1,
                 Name = "Brød",
-                Description = "Godt Brøde"
+                Description = "Godt Brød"
             };
-
+            facade.GetCategoryRepository().Add(category);
             var product = new Product()
             {
                 Id = -1,
                 Title = "Pizza",
                 Price = 100,
+                Image = "PizzaImg", 
+                Description = "Desc Pizza",
+                availableforStudents = true,
+                onlyForHeadmasters = false,
                 Category = category
             };
             facade.GetProductRepository().Add(product);
@@ -44,7 +48,7 @@ namespace SctJSKApiTest.RepositoryTest
             var product2 = facade.GetProductRepository().Read(product.Id);
             Assert.AreEqual(product, product2);
             Assert.AreEqual(product2.Title, "Pizza");
-            Assert.AreEqual(product2.Category, category);
+            Assert.AreEqual(product2.Category.Id, category.Id);
             Assert.AreEqual(product2.Price, 100);
         }
 
@@ -61,8 +65,12 @@ namespace SctJSKApiTest.RepositoryTest
             var product = new Product()
             {
                 Id = -1,
-                Title = "Brød",
-                Description = "Alt med brød",
+                Title = "Pizza",
+                Price = 100,
+                Image = "PizzaImg",
+                Description = "Desc Pizza",
+                availableforStudents = true,
+                onlyForHeadmasters = false,
                 Category = category
             };
             facade.GetProductRepository().Add(product);
@@ -71,6 +79,36 @@ namespace SctJSKApiTest.RepositoryTest
 
             var product2 = facade.GetProductRepository().Read(product.Id);
             Assert.AreEqual(product, product2);
+
+        }
+
+        [Test]
+        public void Product_get_by_category_test()
+        {
+            var category = new Category
+            {
+                Id = -1,
+                Name = "Brød",
+                Description = "Godt Brøde"
+            };
+            facade.GetCategoryRepository().Add(category);
+            var product = new Product()
+            {
+                Id = -1,
+                Title = "Pizza",
+                Price = 100,
+                Image = "PizzaImg",
+                Description = "Desc Pizza",
+                availableforStudents = true,
+                onlyForHeadmasters = false,
+                Category = category
+            };
+            facade.GetProductRepository().Add(product);
+
+            Assert.IsTrue(product.Id > 0);
+
+            var products = facade.GetProductRepository().GetProductsByCategory("Brød");
+            Assert.IsTrue(products.Count() >= 1);
 
         }
 
@@ -87,14 +125,18 @@ namespace SctJSKApiTest.RepositoryTest
             var product = new Product()
             {
                 Id = -1,
-                Title = "Brød",
-                Description = "Alt med brød", 
+                Title = "Pizza",
+                Price = 100,
+                Image = "PizzaImg",
+                Description = "Desc Pizza",
+                availableforStudents = true,
+                onlyForHeadmasters = false,
                 Category = category
             };
             facade.GetProductRepository().Add(product);
 
             Assert.IsNotNull(product);
-            Assert.AreEqual(product.Title, "Brød");
+            Assert.AreEqual(product.Title, "Pizza");
 
             var newname = "Mælk";
             product.Title = newname;
@@ -114,7 +156,16 @@ namespace SctJSKApiTest.RepositoryTest
             }
 
             var products2 = facade.GetProductRepository().ReadAll();
-            Assert.IsEmpty(products2);
+            //Assert.IsEmpty(products2);
+
+            var categories = facade.GetCategoryRepository().ReadAll();
+            foreach (var category in categories)
+            {
+                facade.GetCategoryRepository().Delete(category);
+            }
+
+            var categories2 = facade.GetCategoryRepository().ReadAll();
+            Assert.IsEmpty(categories2);
         }
     }
 }

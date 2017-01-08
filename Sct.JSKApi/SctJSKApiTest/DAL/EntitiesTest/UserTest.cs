@@ -1,17 +1,17 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sct.JSKDAL.DomainModel;
+﻿using NUnit.Framework;
+using Sct.JSKDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SctJSKApiTest.DomainModelTest
+namespace SctJSKApiTest.EntitiesTest
 {
-    [TestClass]
+    [TestFixture]
     public class UserTest
     {
-        [TestMethod]
+        [Test]
         public void User_Adress_props_are_set_test()
         {
             var adress = new Adress

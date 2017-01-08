@@ -1,4 +1,4 @@
-﻿using Sct.JSKDAL.DomainModel;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +10,5 @@ namespace Sct.JSKDAL.Repository.Absttraction
     public interface IArrangementProductRepository<ArrangementProduct>
     {
         void create(ArrangementProduct ap);
-        List<ArrangementProduct> ReadAll();
-        ArrangementProduct Read(int id);
-        ArrangementProduct Update(ArrangementProduct ap);
-        ArrangementProduct Delete(ArrangementProduct ap);
     }
 }

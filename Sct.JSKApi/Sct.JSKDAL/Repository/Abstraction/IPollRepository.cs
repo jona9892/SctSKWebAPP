@@ -14,6 +14,5 @@ namespace Sct.JSKDAL.Repository.Absttraction
         Poll Read(int id);
         void Update(Poll p);
         void Delete(Poll p);
-        List<Poll> ReadAllUnAnswered(int userid);
     }
 }

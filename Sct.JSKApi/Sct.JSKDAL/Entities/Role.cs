@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sct.JSKDAL.DomainModel
+namespace Sct.JSKDAL.Entities
 {
     public class Role
     {
@@ -15,7 +15,7 @@ namespace Sct.JSKDAL.DomainModel
         [StringLength(12)]
         public string Title { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string Description { get; set; }
         //public virtual ICollection<UserRole> Users { get; set; }
         public virtual ICollection<User> Users { get; set; }

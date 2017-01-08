@@ -23,6 +23,8 @@ namespace Sct.JSKApi.Controllers
 
         public HttpResponseMessage PostAnswer(Answer p)
         {
+
+
             var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetAnswerRepository().Add(p));
             return response;
         }
@@ -31,6 +33,7 @@ namespace Sct.JSKApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetAllByUser(int id)
         {
+
             var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetAnswerRepository().ReadAllByUser(id));
             return response;
         }

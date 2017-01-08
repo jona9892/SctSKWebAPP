@@ -1,4 +1,4 @@
-﻿using Sct.JSKDAL.DomainModel;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,6 @@ namespace Sct.JSKDAL.Repository.Absttraction
         List<Arrangement> ReadAll();
         Arrangement Add(Arrangement a);
         Arrangement Read(int id);
-        void Update(Arrangement a);
         void Delete(Arrangement a);
     }
 }

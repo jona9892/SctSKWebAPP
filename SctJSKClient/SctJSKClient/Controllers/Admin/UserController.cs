@@ -29,6 +29,7 @@ namespace SctJSKClient.Controllers
 
         // POST: Aftale/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(User user)
         {
             try
@@ -52,6 +53,7 @@ namespace SctJSKClient.Controllers
 
         // POST: Aftale/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(User user)
         {
             try

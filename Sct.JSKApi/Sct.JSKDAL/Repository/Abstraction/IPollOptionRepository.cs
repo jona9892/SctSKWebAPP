@@ -9,6 +9,5 @@ namespace Sct.JSKDAL.Repository.Absttraction
     public interface IPollOptionRepository<PollOption>
     {
         PollOption Add(PollOption pollOption);
-        List<PollOption> GetPollResult(int pollid);
     }
 }

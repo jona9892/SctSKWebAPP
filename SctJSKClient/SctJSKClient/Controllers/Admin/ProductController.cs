@@ -62,16 +62,15 @@ namespace SctJSKClient.Controllers
         // POST: Aftale/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product)
+        public ActionResult Create([Bind(Include = "Id,Title,Image,Price,Description,Category,availableforStudents,onlyForHeadmasters")]Product product)
         {
-            if (ModelState.IsValid)
-            {
+            
                 product.Category = facade.GetCategoryService().Get(product.Category.Id);
 
                 facade.GetProductService().Add(product);
                 return Redirect("Index");
-            }
-            return View();
+            
+            
         }
 
         // GET: Aftale/Edit/5
@@ -89,18 +88,16 @@ namespace SctJSKClient.Controllers
         // POST: Aftale/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit([Bind(Include = "Id,Title,Image,Price,Description,Category,availableforStudents,onlyForHeadmasters")]Product product)
         {
             try
             {
                 // TODO: Add update logic here
 
-                if (ModelState.IsValid)
-                {
                     product.Category = facade.GetCategoryService().Get(product.Category.Id);
                     facade.GetProductService().Update(product);
 
-                }
+                
                 return RedirectToAction("Index");
             }
             catch

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sct.JSKDAL.DomainModel
+namespace Sct.JSKDAL.Entities
 {
     public class Category
     {

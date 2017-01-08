@@ -1,6 +1,6 @@
 ﻿using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +25,7 @@ namespace Sct.JSKApi.Controllers
         /// <returns>an IEnumerable with products</returns>
         public HttpResponseMessage GetProducts()
         {
+            
             var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetProductRepository().ReadAll());
             return response;
         }

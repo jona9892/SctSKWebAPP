@@ -36,9 +36,9 @@
 
 <div class="panel panel-primary">
     <div class="panel panel-heading" style="text-align:center"><h4 style="color:#ffffff; font-weight:bold">@Model.StartDate</h4></div>
+
     <div class="form-group">
         <img src="@Url.Action("CharterColumn", new { date = Model.StartDate})" alt="Chart" />
-
         <img style="float:right" src="@Url.Action("CharterPie", new { date = Model.StartDate})" alt="Chart" />
     </div>
 

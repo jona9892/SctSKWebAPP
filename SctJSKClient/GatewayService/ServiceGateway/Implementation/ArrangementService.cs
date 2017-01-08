@@ -57,12 +57,12 @@ namespace GatewayService.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Events> GetEvents(int id)
+        public IEnumerable<Events> GetEvents()
         {
             using (var client = new HttpClient())
             {
                 HttpResponseMessage response =
-                    client.GetAsync(END_POINT + "/" + id + "/events").Result;
+                    client.GetAsync(END_POINT + "/" + "/events").Result;
                 return response.Content.ReadAsAsync<IEnumerable<Events>>().Result;
             }
         }

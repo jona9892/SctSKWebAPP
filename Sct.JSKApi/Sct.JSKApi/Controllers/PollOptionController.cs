@@ -18,9 +18,10 @@ namespace Sct.JSKApi.Controllers
             facade = new Facade(new DBContextSctJSK());
         }
 
-        public PollOption PostPollOption(PollOption p)
+        public HttpResponseMessage PostPollOption(PollOption p)
         {
-            return facade.GetPollOptionRepository().Add(p);
+            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetPollOptionRepository().Add(p));
+            return response;            
         }
     }
 }

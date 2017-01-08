@@ -17,7 +17,7 @@ namespace Sct.JSKApi.BLL
             facade = new Facade(context);
         }
 
-        public List<Events> convertToArrangementsToEvents(int id)
+        public List<Events> convertArrangementDataToEvents()
         {
             var arrangements = facade.GetArrangementRepository().ReadAll();
             var events = new List<Events>();

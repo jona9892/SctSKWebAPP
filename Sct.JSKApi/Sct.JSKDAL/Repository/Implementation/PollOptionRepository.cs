@@ -25,10 +25,5 @@ namespace Sct.JSKDAL.Repository.Implementation
             ctx.SaveChanges();
             return newPollOption;
         }
-
-        public List<PollOption> GetPollResult(int pollid)
-        {
-            return ctx.PollOptions.Where(p => p.PollId == pollid).ToList();
-        }
     }
 }

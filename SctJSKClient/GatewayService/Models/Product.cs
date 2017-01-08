@@ -29,8 +29,7 @@ namespace DTOModel
         [StringLength(50)]
         [Display(Name = "Beskrivelse")]
         public string Description { get; set; }
-
-        [Required]
+        
         [Display(Name = "Kategori")]
         public virtual Category Category { get; set; }
 

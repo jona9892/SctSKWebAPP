@@ -1,4 +1,5 @@
-﻿using Sct.JSKDAL.DomainModel;
+﻿
+using Sct.JSKDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Sct.JSKDAL.Context
 {
-    public class DBInitialize : DropCreateDatabaseIfModelChanges<DBContextSctJSK>
+    public class DBInitializer : DropCreateDatabaseIfModelChanges<DBContextSctJSK>
     {
         protected override void Seed(DBContextSctJSK ctx)
         {
 
             //Adresses
-            var adresse1 = new Adress()
+           /* var adresse1 = new Adress()
             {
                 Id = 1,
                 AdressLine = "TestVej 1",
@@ -44,9 +45,9 @@ namespace Sct.JSKDAL.Context
             };
 
             ctx.Adresses.Add(adresse1);
-            ctx.Adresses.Add(adresse2);
-
-
+            ctx.Adresses.Add(adresse2);*/
+            
+            
             DateTime date1 = new DateTime(2008, 5, 1, 8, 30, 52);
 
             var role1 = new Role
@@ -65,79 +66,108 @@ namespace Sct.JSKDAL.Context
             {
                 Id = 3,
                 Title = "Admin",
-                Description = "Cafeteria staff, who is the administrator of the application"
+                Description = "Administrator"
             };
             var role4 = new Role
             {
                 Id = 4,
                 Title = "HeadMaster",
-                Description = "One of the few headmasters at school"
+                Description = "Headmaster"
             };
             ctx.Roles.Add(role1);
             ctx.Roles.Add(role2);
             ctx.Roles.Add(role3);
             ctx.Roles.Add(role4);
-
+            
             var user1 = new User
             {
                 Id = 1,
-                FirstName = "User 1",
-                LastName = "User 1",
+                FirstName = "Jonathan",
+                LastName = "Gjøl",
                 Birthday = date1,
-                Email = "Email1",
-                Phone = 1,
-                Adress = adresse1,
-                Username = "jona9892",
+                Username = "Jona1234",
                 Password = "123456",
-                Roles = role1
 
+                Adress = new Adress
+                {
+                    Id = 1,
+                    AdressLine = "Adress1",
+                    City = "by1",
+                    ZipCode = 6800
+                },
+                Email = "EmailTest@hotmail.dk",
+                Roles = role1,
+                Phone = 41289203
             };
             var user2 = new User
             {
                 Id = 2,
-                FirstName = "User 2",
-                LastName = "User 2",
+                FirstName = "Jonathan",
+                LastName = "Gjøl",
                 Birthday = date1,
-                Email = "Email2",
-                Phone = 2,
-                Adress = adresse2,
-                Roles = role2
+                Username = "Knud1234",
+                Password = "123456",
 
-            };
+                Adress = new Adress
+                {
+                    Id = 2,
+                    AdressLine = "Adress1",
+                    City = "by1",
+                    ZipCode = 6800
+                },
+                Email = "EmailTest@hotmail.dk",
+                Roles = role3,
+                Phone = 41289203
+
+            };/*
             var user3 = new User
             {
                 Id = 3,
-                FirstName = "Knud",
+                FirstName = "Jonathan",
                 LastName = "Gjøl",
                 Birthday = date1,
-                Email = "Knud@sighotel.dk",
-                Phone = 41289200,
-                Adress = adresse3,
-                Roles = role3,
-                Username = "Knud1234",
-                Password = "123456"
+                Username = "HeadMaster123",
+                Password = "123456",
+
+                Adress = new Adress
+                {
+                    Id = 3,
+                    AdressLine = "Adress1",
+                    City = "by1",
+                    ZipCode = 6800
+                },
+                Email = "EmailTest@hotmail.dk",
+                Roles = role4,
+                Phone = 41289203
 
             };
             var user4 = new User
             {
                 Id = 4,
-                FirstName = "HeadMaster",
-                LastName = "The third",
+                FirstName = "Jonathan",
+                LastName = "Gjøl",
                 Birthday = date1,
-                Email = "Knud@sighotel.dk",
-                Phone = 41289200,
-                Adress = adresse4,
-                Roles = role4,
-                Username = "HeadMaster3",
-                Password = "123456"
+                Username = "Teacher123",
+                Password = "123456",
 
-            };
+                Adress = new Adress
+                {
+                    Id = 4,
+                    AdressLine = "Adress1",
+                    City = "by1",
+                    ZipCode = 6800
+                },
+                Email = "EmailTest@hotmail.dk",
+                Roles = role2,
+                Phone = 41289203
+
+            };*/
 
             ctx.Users.Add(user1);
             ctx.Users.Add(user2);
-            ctx.Users.Add(user3);
-            ctx.Users.Add(user4);
-
+            //ctx.Users.Add(user3);
+            //ctx.Users.Add(user4);
+            
             var category1 = new Category
             {
                 Id = 1,
@@ -153,7 +183,7 @@ namespace Sct.JSKDAL.Context
             };
             ctx.Categories.Add(category1);
             ctx.Categories.Add(category2);
-
+            
             var product1 = new Product
             {
                 Id = 1,
@@ -164,6 +194,7 @@ namespace Sct.JSKDAL.Context
                 CategoryId = 1,
                 availableforStudents = true,
                 onlyForHeadmasters = false
+
             };
 
             var product2 = new Product
@@ -215,7 +246,7 @@ namespace Sct.JSKDAL.Context
             var product6 = new Product
             {
                 Id = 6,
-                Title = "SædMælk",
+                Title = "SødMælk",
                 Price = 20,
                 Description = "Arla mini mælk",
                 Image = "https://www.arla.dk/globalassets/arla-dk/products/all-our-brands/arla/skolem_lk-s_dm_lk.png?preset=product-desktop",
@@ -280,7 +311,7 @@ namespace Sct.JSKDAL.Context
             ctx.Products.Add(product8);
             ctx.Products.Add(product9);
             ctx.Products.Add(product10);
-
+            /*
             List<ArrangementProduct> prodList = new List<ArrangementProduct>();
 
             var arrangementproducts1 = new ArrangementProduct
@@ -302,6 +333,7 @@ namespace Sct.JSKDAL.Context
             {
                 Id = 1,
                 Description = "nice",
+                Title = "test",
                 Date = DateTime.Now,
                 Products = new List<ArrangementProduct>
                 {
@@ -315,6 +347,7 @@ namespace Sct.JSKDAL.Context
                 Id = 2,
                 Description = "nice",
                 Date = DateTime.Now,
+                Title = "Test1",
                 Products = new List<ArrangementProduct>
                 {
                     arrangementproducts1, arrangementproducts2, arrangementproducts3

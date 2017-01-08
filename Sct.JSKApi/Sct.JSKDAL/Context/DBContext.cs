@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using Sct.JSKDAL.DomainModel;
 using Sct.JSKDAL.Entities;
 
 namespace Sct.JSKDAL.Context

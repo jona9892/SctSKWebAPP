@@ -20,7 +20,6 @@
                     var end = new Date();
                     end.setMonth(now.getMonth() + 1);
 
-
                     var cal_date_string = view.start.format('MM') + '/' + view.start.format('YYYY');
                     var cur_date_string = now.getMonth() + '/' + now.getFullYear();
                     var end_date_string = end.getMonth() + '/' + end.getFullYear();
@@ -33,19 +32,14 @@
                 },
                 eventConstraint: {
                     start: moment().format('YYYY-MM-DD'),
-                    end: '2100-01-01' // hard coded goodness unfortunately
+                    end: '2100-01-01'
                 },
-
                 theme: false,
-                //defaultView: 'agendaDay',
                 editable: true,
                 events: "/profile/getevents/",
                 weekends: false,
-
             });
         });
-
-
     </script>
 }
 

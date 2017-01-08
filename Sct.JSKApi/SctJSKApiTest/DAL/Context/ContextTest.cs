@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using SctJSKApiTest.Context;
 using System;
 using System.Collections.Generic;

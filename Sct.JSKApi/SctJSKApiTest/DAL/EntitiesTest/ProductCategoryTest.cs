@@ -1,17 +1,17 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sct.JSKDAL.DomainModel;
+﻿using NUnit.Framework;
+using Sct.JSKDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SctJSKApiTest.DomainModelTest
+namespace SctJSKApiTest.EntitiesTest
 {
-    [TestClass]
+    [TestFixture]
     public class ProductCategoryTest
     {
-        [TestMethod]
+        [Test]
         public void Product_Category_props_are_set_test()
         {
             var category = new Category
@@ -20,7 +20,14 @@ namespace SctJSKApiTest.DomainModelTest
                 Name = "Brød",
                 Description = "Alt med brød"
             };
+            var ap = new ArrangementProduct
+            {
+                Id = 1,
+                Quantity = 2
 
+            };
+            List<ArrangementProduct> aplist = new List<ArrangementProduct>();
+            aplist.Add(ap);
             var product = new Product
             {
                 Id = 1,
@@ -28,7 +35,8 @@ namespace SctJSKApiTest.DomainModelTest
                 Price = 20,
                 Description = "normal bolle",
                 Image = "billede",
-                Category = category
+                Category = category,
+                Arrangements = aplist
             };
 
             Assert.AreEqual(product.Id, 1);

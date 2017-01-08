@@ -1,5 +1,5 @@
 ﻿using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using Sct.JSKDAL.Repository.Absttraction;
 using System;
 using System.Collections.Generic;

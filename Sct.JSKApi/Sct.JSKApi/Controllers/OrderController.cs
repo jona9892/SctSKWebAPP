@@ -3,7 +3,7 @@ using Sct.JSKApi.BLL;
 using Sct.JSKApi.Models;
 using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +66,7 @@ namespace Sct.JSKApi.Controllers
 
         public HttpResponseMessage DeleteOrder(int orderid, int userid)
         {
-            return bo.ConfirmOrder(orderid, userid);
+            return bo.ConfirmDeleteOrder(orderid, userid);
         }
 
         [Route("api/order/{startdate}/{enddate}/products")]

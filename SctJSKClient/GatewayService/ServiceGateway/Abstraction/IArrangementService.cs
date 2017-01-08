@@ -15,6 +15,6 @@ namespace GatewayService.Services.Abstraction
         Arrangement Get(int id);
         HttpResponseMessage Update(Arrangement item);
         HttpResponseMessage Delete(Arrangement item);
-        IEnumerable<Events> GetEvents(int id);
+        IEnumerable<Events> GetEvents();
     }
 }

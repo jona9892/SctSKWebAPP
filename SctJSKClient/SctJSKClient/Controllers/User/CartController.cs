@@ -100,6 +100,7 @@ namespace SctJSKClient.Controllers
     
 
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public ActionResult SetOrderDates(IEnumerable<OrderDate> dates, string dayoftime)
         {
             OrderDateViewModel odvm = new OrderDateViewModel
@@ -136,6 +137,7 @@ namespace SctJSKClient.Controllers
                 {
                     Order order = new Order();
                     order.OrderCreated = DateTime.Now;
+                    order.TimeOfDay = orderdates.timeofday;
 
                     order.OrderDate = Convert.ToDateTime(od.orderdate);                    
 

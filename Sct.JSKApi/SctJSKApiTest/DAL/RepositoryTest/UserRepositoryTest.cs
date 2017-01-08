@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Sct.JSKDAL;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using SctJSKApiTest.Context;
 using System;
 using System.Collections.Generic;
@@ -39,13 +39,14 @@ namespace SctJSKApiTest.RepositoryTest
                 FirstName = "Jonathan",
                 LastName = "Gjøl",
                 Birthday = bd,
-                Username = "Jona123",
+                Username = "Jona1234",
                 Password = "123456",
+
                 Adress = new Adress
                 {
                     Id = 1, AdressLine = "Adress1", City = "by1", ZipCode = 6800
                 },
-                Email = "EmailTest",
+                Email = "EmailTest@hotmail.dk",
                 Roles = role,
                 Phone = 41289203
             };
@@ -59,8 +60,15 @@ namespace SctJSKApiTest.RepositoryTest
         }
 
         [Test]
-        public void User_get_by_Email_and_Id_test()
+        public void User_get_by_username_and_Id_test()
         {
+            var role = new Role
+            {
+                Id = 1,
+                Title = "Admin",
+                Description = "An administrator"
+            };
+
             DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
 
             var user = new User
@@ -69,8 +77,9 @@ namespace SctJSKApiTest.RepositoryTest
                 FirstName = "Jonathan",
                 LastName = "Gjøl",
                 Birthday = bd,
-                Username = "Jona123",
+                Username = "Jona1234",
                 Password = "123456",
+
                 Adress = new Adress
                 {
                     Id = 1,
@@ -78,7 +87,8 @@ namespace SctJSKApiTest.RepositoryTest
                     City = "by1",
                     ZipCode = 6800
                 },
-                Email = "EmailTest",
+                Email = "EmailTest@hotmail.dk",
+                Roles = role,
                 Phone = 41289203
             };
 
@@ -94,6 +104,13 @@ namespace SctJSKApiTest.RepositoryTest
         [Test]
         public void User_login_test()
         {
+            var role = new Role
+            {
+                Id = 1,
+                Title = "Admin",
+                Description = "An administrator"
+            };
+
             DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
 
             var user = new User
@@ -104,6 +121,7 @@ namespace SctJSKApiTest.RepositoryTest
                 Birthday = bd,
                 Username = "Jona1234",
                 Password = "123456",
+
                 Adress = new Adress
                 {
                     Id = 1,
@@ -111,20 +129,32 @@ namespace SctJSKApiTest.RepositoryTest
                     City = "by1",
                     ZipCode = 6800
                 },
-                Email = "EmailTest",
+                Email = "EmailTest@hotmail.dk",
+                Roles = role,
                 Phone = 41289203
             };
 
             facade.GetUserRepository().Add(user);
 
             var user2 = facade.GetUserRepository().Login(user.Username, user.Password); 
-            Assert.AreEqual(user, user2);
+            Assert.AreEqual(user.FirstName, user2.FirstName);
+            Assert.AreEqual(user.LastName, user2.LastName);
+            Assert.AreEqual(user.Adress.AdressLine, user2.Adress.AdressLine);
+            Assert.AreEqual(user.Roles.Title, user2.Roles.Title);
+
 
         }
 
         [Test]
         public void User_is_updated_after_update()
         {
+            var role = new Role
+            {
+                Id = 1,
+                Title = "Admin",
+                Description = "An administrator"
+            };
+
             DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
 
             var user = new User
@@ -133,8 +163,9 @@ namespace SctJSKApiTest.RepositoryTest
                 FirstName = "Jonathan",
                 LastName = "Gjøl",
                 Birthday = bd,
-                Username = "Jona123",
+                Username = "Jona1234",
                 Password = "123456",
+
                 Adress = new Adress
                 {
                     Id = 1,
@@ -142,7 +173,8 @@ namespace SctJSKApiTest.RepositoryTest
                     City = "by1",
                     ZipCode = 6800
                 },
-                Email = "EmailTest",
+                Email = "EmailTest@hotmail.dk",
+                Roles = role,
                 Phone = 41289203
             };
 
@@ -155,33 +187,31 @@ namespace SctJSKApiTest.RepositoryTest
 
             facade.GetUserRepository().Update(user);
             Assert.AreEqual(newname, user.FirstName);
+
+            facade.GetUserRepository().Delete(user);
         }
-
-        [Test]
-        public void User_is_removed_from_db()
-        {
-            var users = facade.GetUserRepository().ReadAll();
-            foreach(var user in users)
-            {
-                facade.GetUserRepository().Delete(user);
-            }
-
-            var users2 = facade.GetUserRepository().ReadAll();
-            Assert.IsEmpty(users2);
-        }
-
+                
         [Test]
         public void User_get_orders_test()
         {
-            DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
-            var user = new User
+            var role = new Role
             {
                 Id = 1,
+                Title = "Admin",
+                Description = "An administrator"
+            };
+
+            DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
+
+            var user = new User
+            {
+                Id = -1,
                 FirstName = "Jonathan",
                 LastName = "Gjøl",
                 Birthday = bd,
-                Username = "Jona123",
+                Username = "Jona1234",
                 Password = "123456",
+
                 Adress = new Adress
                 {
                     Id = 1,
@@ -189,7 +219,8 @@ namespace SctJSKApiTest.RepositoryTest
                     City = "by1",
                     ZipCode = 6800
                 },
-                Email = "EmailTest",
+                Email = "EmailTest@hotmail.dk",
+                Roles = role,
                 Phone = 41289203
             };
             facade.GetUserRepository().Add(user);
@@ -198,7 +229,9 @@ namespace SctJSKApiTest.RepositoryTest
                 Id = 1,
                 User = user,
                 OrderDate = bd,
-                OrderCreated = DateTime.Now
+                OrderCreated = DateTime.Now,
+                TimeOfDay = "09:50",
+                TotalPrice = 100
             };
 
             var order2 = new Order
@@ -206,7 +239,9 @@ namespace SctJSKApiTest.RepositoryTest
                 Id = 2,
                 User = user,
                 OrderDate = bd,
-                OrderCreated = DateTime.Now
+                OrderCreated = DateTime.Now,
+                TimeOfDay = "09:50",
+                TotalPrice = 100
             };
 
             facade.GetOrderRepository().Add(order1);
@@ -221,14 +256,24 @@ namespace SctJSKApiTest.RepositoryTest
         {
             DateTime current = new DateTime(2017, 10, 9, 0, 0, 0);
             DateTime now = DateTime.Now;
+            var role = new Role
+            {
+                Id = 1,
+                Title = "Admin",
+                Description = "An administrator"
+            };
+
+            DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
+
             var user = new User
             {
                 Id = -1,
                 FirstName = "Jonathan",
                 LastName = "Gjøl",
-                Username = "Jona123",
+                Birthday = bd,
+                Username = "Jona1234",
                 Password = "123456",
-                Birthday = current,
+
                 Adress = new Adress
                 {
                     Id = 1,
@@ -236,7 +281,8 @@ namespace SctJSKApiTest.RepositoryTest
                     City = "by1",
                     ZipCode = 6800
                 },
-                Email = "EmailTest",
+                Email = "EmailTest@hotmail.dk",
+                Roles = role,
                 Phone = 41289203
             };
             facade.GetUserRepository().Add(user);
@@ -245,7 +291,9 @@ namespace SctJSKApiTest.RepositoryTest
                 Id = 1,
                 User = user,
                 OrderDate = current,
-                OrderCreated = DateTime.Now
+                OrderCreated = DateTime.Now,
+                TimeOfDay = "09:50",
+                TotalPrice = 100
             };
 
             var order2 = new Order
@@ -253,7 +301,9 @@ namespace SctJSKApiTest.RepositoryTest
                 Id = 2,
                 User = user, 
                 OrderDate = current,
-                OrderCreated = DateTime.Now
+                OrderCreated = DateTime.Now,
+                TimeOfDay = "09:50",
+                TotalPrice = 100
             };
 
             facade.GetOrderRepository().Add(order1);
@@ -264,6 +314,19 @@ namespace SctJSKApiTest.RepositoryTest
             {
                 Assert.IsTrue(order.OrderDate >= now);
             }
+
+            foreach (var order in orders)
+            {
+                facade.GetOrderRepository().Delete(user.Id, order);
+            }
+
+            var users = facade.GetUserRepository().ReadAll();
+            foreach (var u in users)
+            {
+                facade.GetUserRepository().Delete(u);
+            }
+
+
         }
 
         [Test]
@@ -271,14 +334,24 @@ namespace SctJSKApiTest.RepositoryTest
         {
             DateTime previous = new DateTime(2015, 10, 9, 0, 0, 0);
             DateTime now = DateTime.Now;
+            var role = new Role
+            {
+                Id = 1,
+                Title = "Admin",
+                Description = "An administrator"
+            };
+
+            DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
+
             var user = new User
             {
                 Id = -1,
                 FirstName = "Jonathan",
                 LastName = "Gjøl",
-                Username = "Jona123",
+                Birthday = bd,
+                Username = "Jona1234",
                 Password = "123456",
-                Birthday = now,
+
                 Adress = new Adress
                 {
                     Id = 1,
@@ -286,7 +359,8 @@ namespace SctJSKApiTest.RepositoryTest
                     City = "by1",
                     ZipCode = 6800
                 },
-                Email = "EmailTest",
+                Email = "EmailTest@hotmail.dk",
+                Roles = role,
                 Phone = 41289203
             };
             facade.GetUserRepository().Add(user);
@@ -295,7 +369,9 @@ namespace SctJSKApiTest.RepositoryTest
                 Id = 1,
                 User = user,
                 OrderDate = previous,
-                OrderCreated = now
+                OrderCreated = now,
+                TimeOfDay = "09:50",
+                TotalPrice = 100
             };
 
             var order2 = new Order
@@ -303,18 +379,113 @@ namespace SctJSKApiTest.RepositoryTest
                 Id = 2,
                 User = user,
                 OrderDate = previous,
-                OrderCreated = now
+                OrderCreated = now,
+                TimeOfDay = "09:50",
+                TotalPrice = 100
             };
 
             facade.GetOrderRepository().Add(order1);
             facade.GetOrderRepository().Add(order2);
 
-            var orders = facade.GetUserRepository().GetCurrentOrders(1);
+            var orders = facade.GetUserRepository().GetPreviousOrders(user.Id);
             foreach (var order in orders)
             {
                 Assert.IsTrue(order.OrderDate <= now);
             }
+            
+            foreach (var order in orders)
+            {
+                facade.GetOrderRepository().Delete(user.Id, order);
+            }
+
+            var users = facade.GetUserRepository().ReadAll();
+            foreach (var u in users)
+            {
+                facade.GetUserRepository().Delete(u);
+            }
         }
 
+
+        [Test]
+        public void User_is_removed_from_db()
+        {
+            var users = facade.GetUserRepository().ReadAll();
+            foreach (var user in users)
+            {
+                facade.GetUserRepository().Delete(user);
+            }
+
+            var users2 = facade.GetUserRepository().ReadAll();
+            Assert.IsEmpty(users2);
+        }
+
+
+        [Test]
+        public void User_order_is_removed_from_db()
+        {
+            DateTime previous = new DateTime(2015, 10, 9, 0, 0, 0);
+            DateTime now = DateTime.Now;
+            var role = new Role
+            {
+                Id = 1,
+                Title = "Admin",
+                Description = "An administrator"
+            };
+
+            DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
+
+            var user = new User
+            {
+                Id = -1,
+                FirstName = "Jonathan",
+                LastName = "Gjøl",
+                Birthday = bd,
+                Username = "Jona1234",
+                Password = "123456",
+
+                Adress = new Adress
+                {
+                    Id = 1,
+                    AdressLine = "Adress1",
+                    City = "by1",
+                    ZipCode = 6800
+                },
+                Email = "EmailTest@hotmail.dk",
+                Roles = role,
+                Phone = 41289203
+            };
+            facade.GetUserRepository().Add(user);
+            var order1 = new Order
+            {
+                Id = 1,
+                User = user,
+                OrderDate = previous,
+                OrderCreated = now,
+                TimeOfDay = "09:50",
+                TotalPrice = 100
+            };
+
+            var order2 = new Order
+            {
+                Id = 2,
+                User = user,
+                OrderDate = previous,
+                OrderCreated = now,
+                TimeOfDay = "09:50",
+                TotalPrice = 100
+            };
+
+            facade.GetOrderRepository().Add(order1);
+            facade.GetOrderRepository().Add(order2);
+
+            facade.GetUserRepository().DeleteOrderByUser(order1, user.Id);
+            facade.GetUserRepository().DeleteOrderByUser(order2, user.Id);
+            var getOrder1 = facade.GetOrderRepository().Read(order1.Id);
+            Assert.IsNull(getOrder1);
+            var getOrder2 = facade.GetOrderRepository().Read(order2.Id);
+            Assert.IsNull(getOrder2);
+
+
+        }
     }
 }

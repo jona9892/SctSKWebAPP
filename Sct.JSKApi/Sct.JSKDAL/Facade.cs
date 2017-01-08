@@ -1,5 +1,4 @@
 ﻿using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
 using Sct.JSKDAL.Entities;
 using Sct.JSKDAL.Repository.Absttraction;
 using Sct.JSKDAL.Repository.Implementation;

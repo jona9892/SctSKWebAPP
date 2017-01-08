@@ -12,7 +12,7 @@ namespace Sct.JSKDAL.Context
     {
         public DBContextSctJSK() : base("SctJSKAPPDB")
         {
-            Database.SetInitializer(new DBInitialize());
+            Database.SetInitializer(new DBInitializer());
         }
     }
 }

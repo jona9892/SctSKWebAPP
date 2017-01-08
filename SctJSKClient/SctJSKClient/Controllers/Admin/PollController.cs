@@ -118,7 +118,7 @@ namespace SctJSKClient.Controllers
         // POST: Aftale/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Poll poll)
+        public ActionResult Edit([Bind(Include = "Id,Question,Active")]Poll poll)
         {
             try
             {

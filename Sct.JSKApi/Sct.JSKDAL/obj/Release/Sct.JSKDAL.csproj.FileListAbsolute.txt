@@ -1,0 +1,10 @@
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\bin\Release\Sct.JSKDAL.dll.config
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\bin\Release\Sct.JSKDAL.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\bin\Release\Sct.JSKDAL.pdb
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\bin\Release\EntityFramework.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\bin\Release\EntityFramework.xml
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\obj\Release\Sct.JSKDAL.csprojResolveAssemblyReference.cache
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\obj\Release\Sct.JSKDAL.dll
+C:\Users\JonathansPC\Documents\Visual Studio 2015\Projects\Finalproject\Sct.JSKApi\Sct.JSKDAL\obj\Release\Sct.JSKDAL.pdb

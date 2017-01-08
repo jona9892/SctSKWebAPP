@@ -44,22 +44,11 @@ namespace Sct.JSKDAL.Repository.Implementation
             return ctx.Polls.Include("PollOptions").ToList();
         }
 
-        public List<Poll> ReadAllUnAnswered(int userid)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Update(Poll p)
         {
             var pollDB = ctx.Polls.FirstOrDefault(c => c.Id == p.Id);
             pollDB.Question = p.Question;
             pollDB.Active = p.Active;
-           /* foreach (var option in p.PollOptions)
-            {
-                var pollOptionDB = ctx.PollOptions.FirstOrDefault(c => c.Id == p.Id);
-                pollOptionDB.OptionText = option.OptionText;
-                ctx.SaveChanges();
-            }*/
 
             ctx.SaveChanges();
         }

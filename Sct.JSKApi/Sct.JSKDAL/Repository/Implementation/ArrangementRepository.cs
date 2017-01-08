@@ -1,5 +1,4 @@
 ﻿using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
 using Sct.JSKDAL.Repository.Absttraction;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using Sct.JSKDAL.Entities;
 
 namespace Sct.JSKDAL.Repository.Implementation
 {
@@ -44,11 +44,6 @@ namespace Sct.JSKDAL.Repository.Implementation
         public List<Arrangement> ReadAll()
         {
             return ctx.Arrangements.Include("Products").ToList();
-        }
-
-        public void Update(Arrangement a)
-        {
-            throw new NotImplementedException();
         }
     }
 }

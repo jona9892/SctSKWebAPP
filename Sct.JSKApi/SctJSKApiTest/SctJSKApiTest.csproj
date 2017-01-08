@@ -55,14 +55,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\BLLAnswerTest.cs" />
+    <Compile Include="BLL\BLLArrangementTest.cs" />
     <Compile Include="BLL\BLLOrderTest.cs" />
+    <Compile Include="BLL\BLLUserTest.cs" />
     <Compile Include="DAL\Context\ContextTest.cs" />
     <Compile Include="DAL\Context\DBContextSctJSKTest.cs" />
+    <Compile Include="DAL\Context\DBTestInitalizer.cs" />
     <Compile Include="DAL\EntitiesTest\AdressTest.cs" />
+    <Compile Include="DAL\EntitiesTest\AnswerTest.cs" />
+    <Compile Include="DAL\EntitiesTest\ArrangementProductTest.cs" />
+    <Compile Include="DAL\EntitiesTest\ArrangementTest.cs" />
     <Compile Include="DAL\EntitiesTest\Order_OrderDetailsTest.cs" />
+    <Compile Include="DAL\EntitiesTest\PollOptionTest.cs" />
+    <Compile Include="DAL\EntitiesTest\PollResultTest.cs" />
+    <Compile Include="DAL\EntitiesTest\PollTest.cs" />
     <Compile Include="DAL\EntitiesTest\ProductCategoryTest.cs" />
     <Compile Include="DAL\EntitiesTest\RoleTest.cs" />
     <Compile Include="DAL\EntitiesTest\UserTest.cs" />
+    <Compile Include="DAL\RepositoryTest\AnswerRepositoryTest.cs" />
+    <Compile Include="DAL\RepositoryTest\ArrangementProductRepository.cs" />
+    <Compile Include="DAL\RepositoryTest\ArrangementRepositoryTest.cs" />
+    <Compile Include="DAL\RepositoryTest\PollOptionRepositoryTest.cs" />
+    <Compile Include="DAL\RepositoryTest\PollRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAL\RepositoryTest\CategoryRepository.cs" />
     <Compile Include="DAL\RepositoryTest\OrderDetailRepositoryTest.cs" />

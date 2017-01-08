@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using Sct.JSKDAL.Context;
+using SctJSKApiTest.DAL.Context;
 
 namespace SctJSKApiTest.Context
 {
@@ -12,6 +13,7 @@ namespace SctJSKApiTest.Context
     {
         public DBContextSctJSKTest() : base("TESTDB")
         {
+            Database.SetInitializer(new DBTestInitalizer());
         }
     }
 }

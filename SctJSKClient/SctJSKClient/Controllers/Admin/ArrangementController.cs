@@ -26,7 +26,7 @@ namespace SctJSKClient.Controllers
             //Get the events
             //You may get from the repository also
             var userId = int.Parse(SessionPersister.UserId);
-            var eventList = facade.GetArrangementService().GetEvents(userId);
+            var eventList = facade.GetArrangementService().GetEvents();
 
             var rows = eventList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);

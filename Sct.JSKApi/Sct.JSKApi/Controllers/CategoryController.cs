@@ -1,6 +1,6 @@
 ﻿using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,6 @@ namespace Sct.JSKApi.Controllers
         {
             var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetCategoryRepository().Add(c));
             return response;
-            //return facade.GetCategoryRepository().Add(c);
         }
 
         public void PutCategory(int id, Category c)

@@ -2,7 +2,7 @@
 using Sct.JSKApi.Models;
 using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +24,13 @@ namespace Sct.JSKApi.Controllers
 
         public HttpResponseMessage GetArrangements()
         {
-            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetArrangementRepository().ReadAll());
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetArrangementRepository().ReadAll());
             return response;
         }
 
         public HttpResponseMessage GetArrangement(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetArrangementRepository().Read(id));
+            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetArrangementRepository().Read(id));
             return response;
         }
 
@@ -39,7 +39,7 @@ namespace Sct.JSKApi.Controllers
             var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetArrangementRepository().Add(p));
             return response;
         }
-
+        /*
         public void PutArrangement(int id, Arrangement p)
         {
             if (p == null)
@@ -50,7 +50,7 @@ namespace Sct.JSKApi.Controllers
 
 
             facade.GetArrangementRepository().Update(p);
-        }
+        }*/
 
         public void DeleteArrangement(int id)
         {
@@ -58,11 +58,11 @@ namespace Sct.JSKApi.Controllers
             facade.GetArrangementRepository().Delete(e);
         }
 
-        [Route("api/arrangement/{id}/events")]
+        [Route("api/arrangement/events")]
         [HttpGet]
-        public IEnumerable<Events> GetEvents(int id)
+        public IEnumerable<Events> GetEvents()
         {
-            return ba.convertToArrangementsToEvents(id);
+            return ba.convertArrangementDataToEvents();
         }
 
     }

@@ -89,7 +89,7 @@ namespace SctJSKClient.Controllers
         // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Category category)
+        public ActionResult DeleteConfirmed([Bind(Include = "Id,Name,Description")]Category category)
         {
             facade.GetCategoryService().Delete(category);
             return RedirectToAction("Index");

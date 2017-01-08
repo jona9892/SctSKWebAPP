@@ -23,6 +23,7 @@ namespace SctJSKClient.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(OrderDate od, string command)
         {
             if (command.Equals("submit1"))

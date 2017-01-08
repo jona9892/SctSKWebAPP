@@ -1,17 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sct.JSKDAL.DomainModel;
+﻿
+using NUnit.Framework;
+using Sct.JSKDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SctJSKApiTest.DomainModelTest
+namespace SctJSKApiTest.EntitiesTest
 {
-    [TestClass]
+    [TestFixture]
     public class Order_OrderDetailsTest
     {
-        [TestMethod]
+        [Test]
         public void Order_Orderdetails_are_set_test()
         {
             DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);

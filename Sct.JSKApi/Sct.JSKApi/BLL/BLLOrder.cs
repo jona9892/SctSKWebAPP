@@ -1,6 +1,5 @@
 ﻿using Sct.JSKApi.Models;
 using Sct.JSKDAL;
-using Sct.JSKDAL.DomainModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ using System.Data.Entity;
 using Sct.JSKDAL.Context;
 using System.Net;
 using System.Net.Http;
+using Sct.JSKDAL.Entities;
 
 namespace Sct.JSKApi.BLL
 {
@@ -47,7 +47,7 @@ namespace Sct.JSKApi.BLL
             }
             return productCounts;
         }
-
+        //------------------------sprint 3----------------------------------------------
         public IEnumerable<ProductCount> CountOrderedProductsByDates(string startDate, string endDate)
         {
             List<ProductCount> productCounts = new List<ProductCount>();
@@ -75,23 +75,23 @@ namespace Sct.JSKApi.BLL
             return productCounts;
         }
 
-        public HttpResponseMessage ConfirmOrder(int orderid, int userid)
+        public HttpResponseMessage ConfirmDeleteOrder(int orderid, int userid)
         {
             Order order = facade.GetOrderRepository().Read(orderid);
             HttpResponseMessage response; 
             DateTime now = DateTime.Now;
             DateTime deadline = order.OrderDate;
-            if(now > deadline.AddHours(-9) && now < deadline)
+            if(now > deadline.AddDays(-24) && now < deadline)
             {
                 response = new HttpResponseMessage(System.Net.HttpStatusCode.Conflict);
-            }
-            else
+            }else
             {
                 facade.GetOrderRepository().Delete(userid, order);
                 response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-                return response;
             }
-            return null;
+            
+            return response;
+            
             
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Sct.JSKDAL.Context;
-using Sct.JSKDAL.DomainModel;
+using Sct.JSKDAL.Entities;
 using Sct.JSKDAL.Repository.Absttraction;
 using System;
 using System.Collections.Generic;
@@ -46,10 +46,6 @@ namespace Sct.JSKDAL.Repository.Implementation
 
         public User Get(string username)
         {
-            /*var user = ctx.Users.Include("Adress").Include("Roles").Include("Order")
-                .Include(or => or.Order.Select(od => od.OrderDetails.Select(p => p.Product)))
-                .Where(c => c.Username.Equals(username)).FirstOrDefault();
-                */
             var user = ctx.Users.Include("Adress").Include("Roles")
             .Where(c => c.Username.Equals(username)).FirstOrDefault();
             return user;
@@ -71,9 +67,6 @@ namespace Sct.JSKDAL.Repository.Implementation
         /// <returns></returns>
         public User Read(int id)
         {
-            /*var user = ctx.Users.Include("Adress").Include("Roles").Include("Order")
-                .Include(or => or.Order.Select(od => od.OrderDetails.Select(p => p.Product))).Where(c => c.Id == id).FirstOrDefault();
-                */
             var user = ctx.Users.Include("Adress").Include("Roles").Where(c => c.Id == id).FirstOrDefault();
             return user;
 
@@ -81,8 +74,6 @@ namespace Sct.JSKDAL.Repository.Implementation
 
         public List<User> ReadAll()
         {
-            //return ctx.Users.Include("Adress").Include("Roles").Include(x => x.Roles.Select(z =>z.Role)).ToList();
-            //return ctx.Users.Include("Adress").Include("Roles").Include("Order").ToList();
             return ctx.Users.Include("Adress").Include("Roles").ToList();
 
         }
@@ -115,8 +106,7 @@ namespace Sct.JSKDAL.Repository.Implementation
         public IEnumerable<Order> GetCurrentOrders(int id)
         {
             DateTime currentDate = DateTime.Today;
-
-            //return ctx.Users.Include("Adress").Include("Roles").Include(x => x.Roles.Select(z =>z.Role)).ToList();
+            
             return ctx.Orders.Include("OrderDetails").Include(p => p.OrderDetails.Select(od => od.Product))
                 .Where(or => or.OrderDate >= currentDate && or.User.Id == id).ToList();
 
@@ -126,8 +116,7 @@ namespace Sct.JSKDAL.Repository.Implementation
         public IEnumerable<Order> GetPreviousOrders(int id)
         {
             DateTime currentDate = DateTime.Today;
-
-            //return ctx.Users.Include("Adress").Include("Roles").Include(x => x.Roles.Select(z =>z.Role)).ToList();
+            
             return ctx.Orders.Include("OrderDetails").Include(p => p.OrderDetails.Select(od => od.Product))
                 .Where(or => or.OrderDate <= currentDate && or.User.Id == id).ToList();
 
