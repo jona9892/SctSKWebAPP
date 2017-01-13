@@ -50,9 +50,7 @@
                     <div class="navbar-collapse collapse">
                         @if (@SessionPersister.Username != null)
                         {
-                            <button type="button" class="btn btn-default navbar-btn navbar-right">
-                                <a href="/Account/Logout">Log out</a>
-                            </button>
+                            <a class="btn btn-default navbar-btn navbar-right" href="/Account/Logout">Log out</a>
                         }
 
 
@@ -70,12 +68,10 @@
                             }
 
 
-                            <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 1%">
-                                <a href="/Cart/Index">
-                                    <i class="glyphicon glyphicon-shopping-cart">
-                                    </i><span> @sum dk</span>
-                                </a>
-                            </button>
+                            <a href="/Cart/Index" class='btn btn-primary navbar-btn navbar-right' style="margin-right:1%">
+                                <i class="glyphicon glyphicon-shopping-cart">
+                                </i><span> @sum dk</span>
+                            </a>
                         </div>
 
                         <ul class="nav navbar-nav">

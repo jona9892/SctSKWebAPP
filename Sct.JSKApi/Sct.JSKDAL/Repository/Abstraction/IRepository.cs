@@ -11,7 +11,7 @@ namespace Sct.JSKDAL.Repository.Absttraction
         List<T> ReadAll();
         T Add(T t);
         T Read(int id);
-        void Update(T e);
+        T Update(T e);
         void Delete(T e);
     }
 }

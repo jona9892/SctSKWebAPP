@@ -2,6 +2,10 @@
     td.fc-day.fc-past {
         background-color: #EEEEEE;
     }
+
+    .fc-time {
+        display: none;
+    }
 </style>
 @section scripts{
     <script src='~/Scripts/locale/da.js'></script>
@@ -11,7 +15,7 @@
                 customButtons: {
                     myCustomButton: {
                         text: 'Tilføj',
-                        click: function() {
+                        click: function () {
                             window.location.href = '/Arrangement/Create/';
                         }
                     }

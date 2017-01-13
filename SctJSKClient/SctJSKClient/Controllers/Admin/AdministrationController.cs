@@ -38,6 +38,10 @@ namespace SctJSKClient.Controllers
 
         public ActionResult ViewOrderedProducts(string orderdate)
         {
+            if (orderdate == null)
+            {
+                return HttpNotFound();
+            }
             //DateTime date = Convert.ToDateTime(orderdate);
             string date = orderdate.Split(' ')[0];
             var productCount = facade.GetOrderService().GetOrderedProducts(date);
@@ -47,21 +51,30 @@ namespace SctJSKClient.Controllers
         
         public ActionResult ViewOrderedCustomers(string orderdate)
         {
+            if (orderdate == null)
+            {
+                return HttpNotFound();
+            }
             string date = orderdate.Split(' ')[0];
             var getusers = facade.GetOrderService().GetAllOrderedCustomers(date).ToList();
             UserOrderDateViewModel uovm = new UserOrderDateViewModel()
             {
                 users = getusers,
                 orderdate = orderdate
-        };
+            };
             
             return View(uovm);
         }
 
         public ActionResult ViewOrderedCustomerDetails(string orderdate, int id)
         {
+            if (orderdate == null || id == 0)
+            {
+                return HttpNotFound();
+            }
             string date = orderdate.Split(' ')[0];
             var order = facade.GetOrderService().GetOrderedCustomerDetails(date, id);
+
             return View(order);
         }
 

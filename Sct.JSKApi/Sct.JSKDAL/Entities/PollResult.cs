@@ -8,7 +8,7 @@ namespace Sct.JSKDAL.Entities
 {
     public class PollResult
     {
-        public string OptionText{ get; set; }
+        public string OptionText { get; set; }
         public int Votes { get; set; }
     }
 }

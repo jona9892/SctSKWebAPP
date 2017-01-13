@@ -12,13 +12,14 @@ namespace GatewayService.Services.Implementation
     public class ArrangementService : IArrangementService<Arrangement>
     {
         protected static readonly string END_POINT = END_POINT + "http://localhost:55391/API/Arrangement";
-        public Arrangement Add(Arrangement item)
+
+        public HttpResponseMessage Add(Arrangement item)
         {
             using (var client = new HttpClient())
             {
                 HttpResponseMessage response =
                     client.PostAsJsonAsync(END_POINT + "/", item).Result;
-                return response.Content.ReadAsAsync<Arrangement>().Result;
+                return response;
             }
         }
 
@@ -28,7 +29,7 @@ namespace GatewayService.Services.Implementation
             {
                 HttpResponseMessage response =
                     client.DeleteAsync(END_POINT + "/" + item.Id).Result;
-                return response;
+                return response.EnsureSuccessStatusCode();
             }
         }
 

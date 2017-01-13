@@ -4,6 +4,8 @@ using SctJSKClient.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,7 +20,6 @@ namespace SctJSKClient.Controllers
         public ActionResult Index(string sortOrder)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
             var categories = facade.GetCategoryService().GetAll();
 
             switch (sortOrder)
@@ -46,21 +47,32 @@ namespace SctJSKClient.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description")]Category category)
+        public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
             {
-                facade.GetCategoryService().Add(category);
-                return RedirectToAction("Index");
+                HttpResponseMessage response = facade.GetCategoryService().Add(category);
+                if (response.StatusCode == HttpStatusCode.Created)
+                    return RedirectToAction("Index");
+                else
+                    return new HttpStatusCodeResult(response.StatusCode);
             }
             return View(category);
         }
 
         // GET: Category/Edit/5
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            Category category = facade.GetCategoryService().Get(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Category category = facade.GetCategoryService().Get(id.Value);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
             return View(category);
         }
 
@@ -69,16 +81,26 @@ namespace SctJSKClient.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description")]Category category)
         {
-
-            facade.GetCategoryService().Update(category);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                HttpResponseMessage response = facade.GetCategoryService().Update(category);
+                if (response.StatusCode == HttpStatusCode.OK)
+                    return RedirectToAction("Index");
+                else
+                    return new HttpStatusCodeResult(response.StatusCode);
+            }
+            return View(category);
 
         }
 
         // GET: Category/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            Category category = facade.GetCategoryService().Get(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Category category = facade.GetCategoryService().Get(id.Value);
             if (category == null)
             {
                 return HttpNotFound();
@@ -91,8 +113,11 @@ namespace SctJSKClient.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed([Bind(Include = "Id,Name,Description")]Category category)
         {
-            facade.GetCategoryService().Delete(category);
-            return RedirectToAction("Index");
+            HttpResponseMessage response = facade.GetCategoryService().Delete(category);
+            if (response.StatusCode == HttpStatusCode.NoContent)
+                return RedirectToAction("Index");
+            else
+                return new HttpStatusCodeResult(response.StatusCode);
         }
     }
 }

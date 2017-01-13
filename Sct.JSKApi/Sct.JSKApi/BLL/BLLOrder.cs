@@ -83,11 +83,11 @@ namespace Sct.JSKApi.BLL
             DateTime deadline = order.OrderDate;
             if(now > deadline.AddDays(-24) && now < deadline)
             {
-                response = new HttpResponseMessage(System.Net.HttpStatusCode.Conflict);
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest);
             }else
             {
                 facade.GetOrderRepository().Delete(userid, order);
-                response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                response = new HttpResponseMessage(HttpStatusCode.OK);
             }
             
             return response;

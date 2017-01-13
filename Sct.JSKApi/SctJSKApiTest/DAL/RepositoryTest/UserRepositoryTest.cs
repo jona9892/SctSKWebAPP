@@ -14,16 +14,12 @@ namespace SctJSKApiTest.RepositoryTest
     public class UserRepositoryTest
     {
         private Facade facade;
+        private User user;
 
         [SetUp]
         public void SetUp()
         {
             facade = new Facade(new DBContextSctJSKTest());
-        }
-
-        [Test]
-        public void User_is_in_db_after_add_test()
-        {
             var role = new Role
             {
                 Id = 1,
@@ -33,45 +29,7 @@ namespace SctJSKApiTest.RepositoryTest
 
             DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
 
-            var user = new User
-            {
-                Id = -1,
-                FirstName = "Jonathan",
-                LastName = "Gjøl",
-                Birthday = bd,
-                Username = "Jona1234",
-                Password = "123456",
-
-                Adress = new Adress
-                {
-                    Id = 1, AdressLine = "Adress1", City = "by1", ZipCode = 6800
-                },
-                Email = "EmailTest@hotmail.dk",
-                Roles = role,
-                Phone = 41289203
-            };
-
-            facade.GetUserRepository().Add(user);
-
-            Assert.IsTrue(user.Id > 0);
-
-            var user2 = facade.GetUserRepository().Read(user.Id);
-            Assert.AreEqual(user, user2);
-        }
-
-        [Test]
-        public void User_get_by_username_and_Id_test()
-        {
-            var role = new Role
-            {
-                Id = 1,
-                Title = "Admin",
-                Description = "An administrator"
-            };
-
-            DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
-
-            var user = new User
+            user = new User
             {
                 Id = -1,
                 FirstName = "Jonathan",
@@ -91,12 +49,27 @@ namespace SctJSKApiTest.RepositoryTest
                 Roles = role,
                 Phone = 41289203
             };
+        }
 
-            facade.GetUserRepository().Add(user);
+        [Test]
+        public void User_is_in_db_after_add_test()
+        {       
+            var m_user = facade.GetUserRepository().Add(user);
+
+            Assert.IsTrue(user.Id > 0);
+
+            var user2 = facade.GetUserRepository().Read(user.Id);
+            Assert.AreEqual(m_user, user2);
+        }
+
+        [Test]
+        public void User_get_by_username_and_Id_test()
+        {
+            var m_user = facade.GetUserRepository().Add(user);
 
             var user2 = facade.GetUserRepository().Read(user.Id);
             var user3 = facade.GetUserRepository().Get(user.Username);
-            Assert.AreEqual(user, user2);
+            Assert.AreEqual(m_user, user2);
            // Assert.AreEqual(user, user3);
 
         }
@@ -104,43 +77,13 @@ namespace SctJSKApiTest.RepositoryTest
         [Test]
         public void User_login_test()
         {
-            var role = new Role
-            {
-                Id = 1,
-                Title = "Admin",
-                Description = "An administrator"
-            };
-
-            DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
-
-            var user = new User
-            {
-                Id = -1,
-                FirstName = "Jonathan",
-                LastName = "Gjøl",
-                Birthday = bd,
-                Username = "Jona1234",
-                Password = "123456",
-
-                Adress = new Adress
-                {
-                    Id = 1,
-                    AdressLine = "Adress1",
-                    City = "by1",
-                    ZipCode = 6800
-                },
-                Email = "EmailTest@hotmail.dk",
-                Roles = role,
-                Phone = 41289203
-            };
-
-            facade.GetUserRepository().Add(user);
+            var m_user = facade.GetUserRepository().Add(user);
 
             var user2 = facade.GetUserRepository().Login(user.Username, user.Password); 
-            Assert.AreEqual(user.FirstName, user2.FirstName);
-            Assert.AreEqual(user.LastName, user2.LastName);
-            Assert.AreEqual(user.Adress.AdressLine, user2.Adress.AdressLine);
-            Assert.AreEqual(user.Roles.Title, user2.Roles.Title);
+            Assert.AreEqual(m_user.FirstName, user2.FirstName);
+            Assert.AreEqual(m_user.LastName, user2.LastName);
+            Assert.AreEqual(m_user.Adress.AdressLine, user2.Adress.AdressLine);
+            Assert.AreEqual(m_user.Roles.Title, user2.Roles.Title);
 
 
         }
@@ -148,47 +91,17 @@ namespace SctJSKApiTest.RepositoryTest
         [Test]
         public void User_is_updated_after_update()
         {
-            var role = new Role
-            {
-                Id = 1,
-                Title = "Admin",
-                Description = "An administrator"
-            };
-
-            DateTime bd = new DateTime(1995, 10, 9, 0, 0, 0);
-
-            var user = new User
-            {
-                Id = -1,
-                FirstName = "Jonathan",
-                LastName = "Gjøl",
-                Birthday = bd,
-                Username = "Jona1234",
-                Password = "123456",
-
-                Adress = new Adress
-                {
-                    Id = 1,
-                    AdressLine = "Adress1",
-                    City = "by1",
-                    ZipCode = 6800
-                },
-                Email = "EmailTest@hotmail.dk",
-                Roles = role,
-                Phone = 41289203
-            };
-
-            facade.GetUserRepository().Add(user);
-            Assert.IsNotNull(user);
-            Assert.AreEqual(user.FirstName, "Jonathan");
+            var m_user = facade.GetUserRepository().Add(user);
+            Assert.IsNotNull(m_user);
+            Assert.AreEqual(m_user.FirstName, "Jonathan");
 
             var newname = "shaun";
             user.FirstName = newname;
 
-            facade.GetUserRepository().Update(user);
-            Assert.AreEqual(newname, user.FirstName);
+            facade.GetUserRepository().Update(m_user);
+            Assert.AreEqual(newname, m_user.FirstName);
 
-            facade.GetUserRepository().Delete(user);
+            facade.GetUserRepository().Delete(m_user);
         }
                 
         [Test]

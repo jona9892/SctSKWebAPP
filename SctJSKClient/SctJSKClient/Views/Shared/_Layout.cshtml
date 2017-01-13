@@ -35,7 +35,8 @@
                         <i class="glyphicon glyphicon-cog pull-left"></i><span>&nbsp;Administration</span>
                     </a>
                 </div>
-            }else
+            }
+            else
             {
 
             }
@@ -46,7 +47,8 @@
                         <i class="glyphicon glyphicon-tasks pull-left"></i><span>&nbsp;Arrangementer</span>
                     </a>
                 </div>
-            }else
+            }
+            else
             {
 
             }
@@ -66,10 +68,9 @@
                     <div class="navbar-collapse collapse">
                         @if (@SessionPersister.Username != null)
                         {
-                            <button type="button" class="btn btn-default navbar-btn navbar-right">
-                                <a href="/Account/Logout">Log out</a>
-                            </button>
-                        }else
+                                <a class ="btn btn-default navbar-btn navbar-right"href="/Account/Logout">Log out</a>
+                        }
+                        else
                         {
 
                         }
@@ -89,12 +90,10 @@
                             }
 
 
-                            <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 1%">
-                                <a href="/Cart/Index">
-                                    <i class="glyphicon glyphicon-shopping-cart">
-                                    </i><span> @sum dk</span>
-                                </a>
-                            </button>
+                            <a href="/Cart/Index" class='btn btn-primary navbar-btn navbar-right' style="margin-right:1%">
+                                <i class="glyphicon glyphicon-shopping-cart">
+                                </i><span> @sum dk</span>
+                            </a>
                         </div>
 
                         <ul class="nav navbar-nav">
@@ -112,7 +111,7 @@
                         <form class="navbar-form navbar-right hidden-xs" role="search">
                             <div class="form-group">
                                 <input placeholder="Søg efter produkter" type="search" class="form-control" id="txtAutocomplete" style="max-width:300px;" /><br />
-                            </div>                            
+                            </div>
                         </form>
 
                     </div>
@@ -166,14 +165,14 @@
                     var url = "/Home/ProductDetails/" + ui.item.value;
                     window.location.href = url;
                 }
-            }).data("ui-autocomplete")._enderItem = function (ul, item) {
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 var inner_html =
                      '<a style="margin-bottom:2%;">'
                      + '<img  style="height:60px; width:60px; float:left;margin-right:10px;" src="' +
                      item.image + '"><ps style="color:#42a7f4; text-decoration: underline;">'
                      + item.label +
                      '</p><div>' +
-                     "Pris: " + '<b>'+ item.price + " kr" + '</b>' + '</div></div></div></a>';
+                     "Pris: " + '<b>' + item.price + " kr" + '</b>' + '</div></div></div></a>';
                 return $("<li></li>")
                     .data("item.autocomplete", item)
                     .append(inner_html)

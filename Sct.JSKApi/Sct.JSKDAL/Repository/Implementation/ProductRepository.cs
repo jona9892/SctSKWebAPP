@@ -49,7 +49,7 @@ namespace Sct.JSKDAL.Repository.Implementation
             return ctx.Products.Include("Category").ToList();
         }
 
-        public void Update(Product p)
+        public Product Update(Product p)
         {
             var productDB = ctx.Products.FirstOrDefault(c => c.Id == p.Id);
             var getCategoryId = p.Category.Id;
@@ -62,6 +62,7 @@ namespace Sct.JSKDAL.Repository.Implementation
             productDB.onlyForHeadmasters = p.onlyForHeadmasters;
 
             ctx.SaveChanges();
+            return productDB;
         }
 
         public List<Product> GetProductsByCategory(string category)

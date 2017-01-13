@@ -10,7 +10,7 @@ namespace GatewayService.Services.Abstraction
 {
     public interface IArrangementService<Arrangement>
     {
-        Arrangement Add(Arrangement item);
+        HttpResponseMessage Add(Arrangement item);
         IEnumerable<Arrangement> GetAll();
         Arrangement Get(int id);
         HttpResponseMessage Update(Arrangement item);

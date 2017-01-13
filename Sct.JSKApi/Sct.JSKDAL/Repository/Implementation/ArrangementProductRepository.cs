@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sct.JSKDAL.Repository.Implementation
 {
-    public class ArrangementProductRepository : IArrangementProductRepository<ArrangementProduct>
+    public class ArrangementProductRepository : IArrangementProductRepository
     {
 
         private DBContext ctx;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sct.JSKDAL.Repository.Implementation
 {
-    public class PollOptionRepository : IPollOptionRepository<PollOption>
+    public class PollOptionRepository : IPollOptionRepository
     {
         private DBContext ctx;
 

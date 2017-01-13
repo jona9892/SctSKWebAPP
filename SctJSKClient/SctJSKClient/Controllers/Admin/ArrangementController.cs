@@ -5,6 +5,8 @@ using SctJSKClient.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,13 +23,12 @@ namespace SctJSKClient.Controllers
             return View(arrangements);
         }
 
-        public ActionResult GetEvents(DateTime start, DateTime end)
+        public ActionResult GetEvents()
         {
             //Get the events
-            //You may get from the repository also
-            var userId = int.Parse(SessionPersister.UserId);
             var eventList = facade.GetArrangementService().GetEvents();
 
+            //return the events in json
             var rows = eventList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);
         }
@@ -42,35 +43,45 @@ namespace SctJSKClient.Controllers
             };
             return View(avm);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ArrangementViewModel avm)
         {
             if (ModelState.IsValid)
             {
-
-                Arrangement arrangement = facade.GetArrangementService().Add(avm.Arrangement);
-
-                foreach(var ap in avm.selected)
+                HttpResponseMessage response = facade.GetArrangementService().Add(avm.Arrangement);
+                if (response.StatusCode == HttpStatusCode.Created)
                 {
-                    ArrangementProduct arp = new ArrangementProduct();
-                    arp.ProductId = int.Parse(ap);
-                    arp.ArrangementId = arrangement.Id;
-                    arp.Quantity = 29;
-                    
-                    facade.GetArrangementProductService().create(arp);
+                    Arrangement arrangement = response.Content.ReadAsAsync<Arrangement>().Result;
+                    foreach (var ap in avm.selected)
+                    {
+                        ArrangementProduct arp = new ArrangementProduct();
+                        arp.ProductId = int.Parse(ap);
+                        arp.ArrangementId = arrangement.Id;
+                        arp.Quantity = 30;
+
+                        facade.GetArrangementProductService().create(arp);
+                    }
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(response.StatusCode);
                 }
 
-                return RedirectToAction("Index");
             }
             return View();
         }
 
         // GET: Aftale/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            var arrangement = facade.GetArrangementService().Get(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var arrangement = facade.GetArrangementService().Get(id.Value);
             if (arrangement == null)
             {
                 return HttpNotFound();
@@ -83,16 +94,14 @@ namespace SctJSKClient.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Arrangement arrangement)
         {
-            try
-            {
-                // TODO: Add delete logic here
-                facade.GetArrangementService().Delete(arrangement);
+
+            // TODO: Add delete logic here
+            HttpResponseMessage response = facade.GetArrangementService().Delete(arrangement);
+            if (response.StatusCode == HttpStatusCode.NoContent)
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            else
+                return new HttpStatusCodeResult(response.StatusCode);
+
         }
 
 
@@ -100,7 +109,10 @@ namespace SctJSKClient.Controllers
         {
             ArrangementProductViewModel apvm = new ArrangementProductViewModel();
             apvm.Arrangement = facade.GetArrangementService().Get(id);
-
+            if (apvm.Arrangement == null)
+            {
+                return HttpNotFound();
+            }
             foreach (var item in apvm.Arrangement.Products)
             {
                 ArrangementProduct arrangementProduct = new ArrangementProduct();

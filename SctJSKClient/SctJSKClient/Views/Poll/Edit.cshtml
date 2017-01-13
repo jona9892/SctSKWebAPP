@@ -10,54 +10,61 @@
         padding: 5px 0 0 15px;
         font-size: 25px;
     }
-
 </style>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div class="container">
+    <div class="row">
+        <div class="well well-sm">
+            <h3><i class="glyphicon glyphicon-tasks"></i> Afstemning</h3>
 
-    <div class="form-horizontal">
-            <div class="panel panel-default" style="text-align:center;">
-                <p class="prod_title">Redigere sprøgsmål: @Model.Question</p>
-                <div class="clear"></div>
-            </div>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-horizontal">
+                    <div class="panel panel-default" style="text-align:center;">
+                        <p class="prod_title">Redigere sprøgsmål: @Model.Question</p>
+                        <div class="clear"></div>
+                    </div>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Active)
-                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Active)
+                                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (var polloption in Model.PollOptions)
+                    {
+                        @Html.TextBoxFor(m => polloption.OptionText, new { @class = "form-control", placeholder = "Svar" })
+                        @Html.ValidationMessageFor(model => polloption.OptionText, "", new { @class = "text-danger" })
+                    }
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Gem" class="btn btn-primary" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        @foreach (var polloption in Model.PollOptions)
-        {
-            @Html.TextBoxFor(m => polloption.OptionText, new { @class = "form-control", placeholder = "Svar" })
-            @Html.ValidationMessageFor(model => polloption.OptionText, "", new { @class = "text-danger" })
-        }
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Gem" class="btn btn-primary" />
+            }
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Tilabge til listen", "Index")
-</div>
+            <div>
+                @Html.ActionLink("Tilabge til listen", "Index")
+            </div>

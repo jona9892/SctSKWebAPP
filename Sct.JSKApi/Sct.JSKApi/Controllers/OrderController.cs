@@ -4,64 +4,123 @@ using Sct.JSKApi.Models;
 using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
 using Sct.JSKDAL.Entities;
+using Sct.JSKDAL.Repository.Absttraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Sct.JSKApi.Controllers
 {
     public class OrderController : ApiController
     {
-        private Facade facade;
+        private IOrderRepository<Order> or;
         private BLLOrder bo;
         public OrderController()
         {
-            facade = new Facade(new DBContextSctJSK());
+            or = new Facade(new DBContextSctJSK()).GetOrderRepository();
             bo = new BLLOrder(new DBContextSctJSK());
         }
-        
-        public HttpResponseMessage PostOrder(Order order)
+
+        [ResponseType(typeof(Order))]
+        public IHttpActionResult PostOrder(Order order)
         {
-            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetOrderRepository().Add(order));
-            return response;
+            /*
+            var getOrder = facade.GetOrderRepository().Add(order);
+
+            if (getOrder != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.Created, getOrder);
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.ServiceUnavailable);
+            }*/
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var getOrder = or.Add(order);
+            if(getOrder == null)
+            {
+                return InternalServerError();
+            }
+            return Content(HttpStatusCode.Created, getOrder);
+            //return CreatedAtRoute("DefaultApi", new { id = getOrder.Id }, getOrder);
         }
 
-        public HttpResponseMessage GetOrder(int id)
+        [ResponseType(typeof(Order))]
+        public IHttpActionResult GetOrder(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetOrderRepository().Read(id));
-            return response;
+            /*
+            var getOrder = facade.GetOrderRepository().Read(id);
+
+            if (getOrder != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.OK, getOrder);
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }*/
+            var getOrder = or.Read(id);
+            if (getOrder == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(getOrder);
         }
 
-        public HttpResponseMessage GetOrder()
+        public IEnumerable<Order> GetOrder()
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetOrderRepository().ReadAll());
-            return response;
+            var getOrders = or.ReadAll();
+
+            //var response = Request.CreateResponse(HttpStatusCode.OK, getOrder);
+            return getOrders;
+
         }
 
         [Route("api/order/{orderdate}/users")]
         [HttpGet]
-        public HttpResponseMessage GetOrderedCustomers(string orderdate)
+        public IEnumerable<User> GetOrderedCustomers(string orderdate)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetOrderRepository().GetAllOrderedCustomers(orderdate));
-            return response;
+            var getUsers = or.GetAllOrderedCustomers(orderdate);
+
+            //var response = Request.CreateResponse(HttpStatusCode.OK, getOrder);
+            return getUsers;
+
         }
 
         [Route("api/order/{orderdate}/{id}/users")]
         [HttpGet]
-        public Order HttpResponseMessage(string orderdate, int id)
+        [ResponseType(typeof(Order))]
+        public IHttpActionResult getOrderedCustomerDetail(string orderdate, int id)
         {
-            return facade.GetOrderRepository().GetAllOrderedCustomerDetail(orderdate, id);
+            var getOrder = or.GetAllOrderedCustomerDetail(orderdate, id);
+            /*var response = Request.CreateResponse(HttpStatusCode.OK, getOrder);
+            return response;*/
+            if (getOrder == null)
+            {
+                return NotFound();
+            }
+            return Ok(getOrder);
         }
 
         [Route("api/order/{orderdate}/products")]
         [HttpGet]
-        public HttpResponseMessage GetOrderedProducts(string orderdate)
+        public IEnumerable<ProductCount> GetOrderedProducts(string orderdate)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, bo.CountOrderedProductsByDate(orderdate));
-            return response;
+            var productCounts = bo.CountOrderedProductsByDate(orderdate);
+
+            //var response = Request.CreateResponse(HttpStatusCode.OK, getOrder);
+            return productCounts;
+
         }
 
         public HttpResponseMessage DeleteOrder(int orderid, int userid)
@@ -71,10 +130,12 @@ namespace Sct.JSKApi.Controllers
 
         [Route("api/order/{startdate}/{enddate}/products")]
         [HttpGet]
-        public HttpResponseMessage GetOrderedProductsByDates(string startdate, string enddate)
+        public IEnumerable<ProductCount> GetOrderedProductsByDates(string startdate, string enddate)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, bo.CountOrderedProductsByDates(startdate, enddate));
-            return response;
+            var productCounts = bo.CountOrderedProductsByDates(startdate, enddate);
+            //var response = Request.CreateResponse(HttpStatusCode.OK, getOrder);
+            return productCounts;
+
         }
     }
 }

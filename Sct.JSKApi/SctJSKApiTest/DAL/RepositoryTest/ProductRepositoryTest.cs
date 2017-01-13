@@ -14,55 +14,20 @@ namespace SctJSKApiTest.RepositoryTest
     public class ProductRepositoryTest
     {
         private Facade facade;
+        private Category category;
+        private Product product;
 
         [SetUp]
         public void SetUp()
         {
             facade = new Facade(new DBContextSctJSKTest());
-        }
-
-        [Test]
-        public void Product_is_in_db_after_add_test()
-        {
-            var category = new Category
+            category = new Category
             {
                 Id = -1,
                 Name = "Brød",
                 Description = "Godt Brød"
             };
-            facade.GetCategoryRepository().Add(category);
-            var product = new Product()
-            {
-                Id = -1,
-                Title = "Pizza",
-                Price = 100,
-                Image = "PizzaImg", 
-                Description = "Desc Pizza",
-                availableforStudents = true,
-                onlyForHeadmasters = false,
-                Category = category
-            };
-            facade.GetProductRepository().Add(product);
-
-            Assert.IsTrue(product.Id > 0);
-            var product2 = facade.GetProductRepository().Read(product.Id);
-            Assert.AreEqual(product, product2);
-            Assert.AreEqual(product2.Title, "Pizza");
-            Assert.AreEqual(product2.Category.Id, category.Id);
-            Assert.AreEqual(product2.Price, 100);
-        }
-
-        [Test]
-        public void Product_get_by_Id_test()
-        {
-            var category = new Category
-            {
-                Id = -1,
-                Name = "BRød",
-                Description = "Godt Brøde"
-            };
-            facade.GetCategoryRepository().Add(category);
-            var product = new Product()
+            product = new Product()
             {
                 Id = -1,
                 Title = "Pizza",
@@ -73,6 +38,28 @@ namespace SctJSKApiTest.RepositoryTest
                 onlyForHeadmasters = false,
                 Category = category
             };
+
+        }
+
+        [Test]
+        public void Product_is_in_db_after_add_test()
+        {
+
+            var m_category = facade.GetCategoryRepository().Add(category);
+            var m_product = facade.GetProductRepository().Add(product);
+
+            Assert.IsTrue(product.Id > 0);
+            var product2 = facade.GetProductRepository().Read(product.Id);
+            Assert.AreEqual(m_product, product2);
+            Assert.AreEqual(product2.Title, "Pizza");
+            Assert.AreEqual(product2.Category.Id, m_category.Id);
+            Assert.AreEqual(product2.Price, 100);
+        }
+
+        [Test]
+        public void Product_get_by_Id_test()
+        {
+            facade.GetCategoryRepository().Add(category);
             facade.GetProductRepository().Add(product);
 
             Assert.IsTrue(product.Id > 0);
@@ -85,24 +72,7 @@ namespace SctJSKApiTest.RepositoryTest
         [Test]
         public void Product_get_by_category_test()
         {
-            var category = new Category
-            {
-                Id = -1,
-                Name = "Brød",
-                Description = "Godt Brøde"
-            };
             facade.GetCategoryRepository().Add(category);
-            var product = new Product()
-            {
-                Id = -1,
-                Title = "Pizza",
-                Price = 100,
-                Image = "PizzaImg",
-                Description = "Desc Pizza",
-                availableforStudents = true,
-                onlyForHeadmasters = false,
-                Category = category
-            };
             facade.GetProductRepository().Add(product);
 
             Assert.IsTrue(product.Id > 0);
@@ -115,24 +85,7 @@ namespace SctJSKApiTest.RepositoryTest
         [Test]
         public void Product_is_updated_after_update()
         {
-            var category = new Category
-            {
-                Id = -1,
-                Name = "BRød",
-                Description = "Godt Brøde"
-            };
             facade.GetCategoryRepository().Add(category);
-            var product = new Product()
-            {
-                Id = -1,
-                Title = "Pizza",
-                Price = 100,
-                Image = "PizzaImg",
-                Description = "Desc Pizza",
-                availableforStudents = true,
-                onlyForHeadmasters = false,
-                Category = category
-            };
             facade.GetProductRepository().Add(product);
 
             Assert.IsNotNull(product);

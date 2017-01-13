@@ -28,6 +28,7 @@ namespace SctJSKClient.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(AccountViewModel avm)
         {
             var user = facade.GetUserService();

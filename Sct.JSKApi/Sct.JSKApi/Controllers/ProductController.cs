@@ -1,21 +1,23 @@
 ﻿using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
 using Sct.JSKDAL.Entities;
+using Sct.JSKDAL.Repository.Absttraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Sct.JSKApi.Controllers
 {
     public class ProductController : ApiController
     {
-        private Facade facade;
+        private IProductRepository pr;
         public ProductController()
         {
-            facade = new Facade(new DBContextSctJSK());
+            pr = new Facade(new DBContextSctJSK()).GetProductRepository();
         }
 
         // GET: api/Product
@@ -23,50 +25,92 @@ namespace Sct.JSKApi.Controllers
         /// this returns an IEnumerable, which contains all products.
         /// </summary>
         /// <returns>an IEnumerable with products</returns>
-        public HttpResponseMessage GetProducts()
+        /// 
+        public IEnumerable<Product> GetProducts()
         {
-            
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetProductRepository().ReadAll());
-            return response;
+            var products = pr.ReadAll();
+            //var response = Request.CreateResponse(HttpStatusCode.OK, products);
+            return products;
+
         }
 
-        public HttpResponseMessage GetProduct(int id)
+        [ResponseType(typeof(Product))]
+        public IHttpActionResult GetProduct(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetProductRepository().Read(id));
-            return response;
-        }
-
-        public HttpResponseMessage PostProduct(Product p)
-        {
-            var product = facade.GetProductRepository().Add(p);
-
-            var response = Request.CreateResponse(HttpStatusCode.Created, product);
-            return response;
-        }
-
-        public void PutProduct(int id, Product p)
-        {
-            if (p == null)
+            var product = pr.Read(id);
+            if (product == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
             }
-            p.Id = id;
 
+            return Ok(product);
 
-            facade.GetProductRepository().Update(p);
+            /*if (product != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.OK, product);
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }*/
+
+        }
+
+        [ResponseType(typeof(Product))]
+        public IHttpActionResult PostProduct(Product p)
+        {            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var product = pr.Add(p);
+            return Content(HttpStatusCode.Created, product);
+        }
+
+        [ResponseType(typeof(Product))]
+        public IHttpActionResult PutProduct(int id, Product p)
+        {            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var product = pr.Update(p);
+            if (product == null)
+            {                
+                return InternalServerError();
+            }
+            return Ok(product);
+
+            /*if (product != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.Created, product);
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }*/
+
         }
 
         public void DeleteProduct(int id)
         {
-            var e = facade.GetProductRepository().Read(id);
-            facade.GetProductRepository().Delete(e);
+            var product = pr.Read(id);
+            if (product == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            pr.Delete(product);
         }
-        
-       
-        public HttpResponseMessage GetProductsByCategory(string category)
+
+
+        public IEnumerable<Product> GetProductsByCategory(string category)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetProductRepository().GetProductsByCategory(category));
-            return response;
+            var products = pr.GetProductsByCategory(category);
+
+            //var response = Request.CreateResponse(HttpStatusCode.OK, product);
+            return products;
         }
     }
 }

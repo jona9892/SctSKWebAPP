@@ -9,9 +9,5 @@ namespace GatewayService.Services.Abstraction
     public interface IArrangementProductService<ArrengementProduct>
     {
         void create(ArrengementProduct arrengementProduct);
-        IEnumerable<ArrengementProduct> GetAll();
-        ArrengementProduct Get(int id);
-        ArrengementProduct Update(ArrengementProduct item);
-        ArrengementProduct Delete(ArrengementProduct item);
     }
 }

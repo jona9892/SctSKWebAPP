@@ -1,57 +1,116 @@
 ﻿using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
 using Sct.JSKDAL.Entities;
+using Sct.JSKDAL.Repository.Absttraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Sct.JSKApi.Controllers
 {
     public class PollController : ApiController
     {
-        private Facade facade;
+        private IPollRepository<Poll> pr;
         public PollController()
         {
-            facade = new Facade(new DBContextSctJSK());
+            pr = new Facade(new DBContextSctJSK()).GetPollRepository();
         }
 
-        public HttpResponseMessage GetPolls()
+        public IEnumerable<Poll> GetPolls()
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetPollRepository().ReadAll());
-            return response;
+            var polls = pr.ReadAll();
+            //var response = Request.CreateResponse(HttpStatusCode.OK, poll);
+            return polls;
         }
 
-        public HttpResponseMessage GetPoll(int id)
+        [ResponseType(typeof(Poll))]
+        public IHttpActionResult GetPoll(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetPollRepository().Read(id));
-            return response;
-        }
-
-        public HttpResponseMessage PostPoll(Poll p)
-        {
-            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetPollRepository().Add(p));
-            return response;
-        }
-
-        public void PutPoll(int id, Poll p)
-        {
-            if (p == null)
+            /*
+            var poll = facade.GetPollRepository().Read(id);
+            if (poll != null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                var response = Request.CreateResponse(HttpStatusCode.OK, poll);
+                return response;
             }
-            p.Id = id;
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }*/
+            var poll = pr.Read(id);
+            if (poll == null)
+            {
+                return NotFound();
+            }
 
+            return Ok(poll);
+        }
 
-            facade.GetPollRepository().Update(p);
+        [ResponseType(typeof(Poll))]
+        public IHttpActionResult PostPoll(Poll p)
+        {
+            /*
+            var poll = facade.GetPollRepository().Add(p);
+            if (poll != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.OK, poll);
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }*/
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var poll = pr.Add(p);
+            if(poll == null)
+            {
+                return InternalServerError();
+            }
+            return Content(HttpStatusCode.Created, poll);
+            //return CreatedAtRoute("DefaultApi", new { id = poll.Id }, poll);
+        }
+
+        [ResponseType(typeof(Category))]
+        public IHttpActionResult PutPoll(int id, Poll p)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var poll = pr.Update(p);
+            if(poll == null)
+            {
+                return InternalServerError();
+            }
+            return Ok(poll);
+            /*
+            var poll = facade.GetPollRepository().Update(p);
+            if (poll != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.Created, poll);
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }*/
         }
 
         public void DeletePoll(int id)
         {
-            var poll = facade.GetPollRepository().Read(id);
-            facade.GetPollRepository().Delete(poll);
+            var poll = pr.Read(id);
+            if (poll == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            pr.Delete(poll);
         }
     }
 }

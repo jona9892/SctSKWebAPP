@@ -19,21 +19,59 @@
             </div>
             <div class="panel-body">
                 <div class="items">
-
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <table class="table table-striped">
-                            <tr>
-                                <td>
-                                    @foreach (var item in Model.ArrangementProducts)
-                                    {
-                                        <ul>
-                                            <li style="font-weight:bold">@item.Product.Title</li>
-                                            <li>Antal: @item.Quantity</li>
-                                        </ul>
-                                    }
-                                </td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>Produkt</th>
+                                    <th>Antal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.ArrangementProducts)
+                                {
+                                    <tr>
+                                        <td class="col-sm-8 col-md-6">
+                                            <div class="media">
+                                                <a class="thumbnail pull-left" href="/Home/ProductDetails/@item.Product.Id"> <img class="media-object" src="@item.Product.Image" style="width: 72px; height: 72px;"> </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="/Home/ProductDetails/@item.Product.Id">@item.Product.Title</a></h4>
+                                                    <h5 class="media-heading">@item.Product.Description</h5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-th="Quantity">
+                                            <p class="form-control text-center" style="width:70px;">@item.Quantity</p>
+                                        </td>
+                                    </tr>
+                                            }
+                            </tbody>
                         </table>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4>Arrangement detaljer</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                    <h4 style="color:#000000"><b>Beskrivelse</b></h4>
+                                    <p>@Model.Arrangement.Description</p>
+                                </div>
+                                <div>
+                                    <h4 style="color:#000000"><b>Dato</b></h4>
+                                    <li>
+                                        @{
+                                            var date = Model.Arrangement.Date.ToString().Split(' ')[0];
+                                        }
+                                        @date
+                                    </li>
+
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -51,12 +51,13 @@
                     </td>
                     <td class="text-right">
                         <a class='btn btn-info' href="/Poll/Edit/@poll.Id"><span class="glyphicon glyphicon-info-sign"></span> Redigere</a>
-                        <button class="btn btn-danger">
-                            @Html.ActionLink("Slet", "Delete", new { id = poll.Id, @class = "my-class" },
-                      new { onclick = "return confirm('Er du sikker på du vil slette denne afstemning?');" })
-                            <span class="glyphicon glyphicon-remove pull-left"></span>
+                        <a class='btn btn-danger' href="/Poll/Delete/@poll.Id"><span class="glyphicon glyphicon-remove"></span> Fjern</a>
+                        @*<button class="btn btn-danger">
+                                  @Html.ActionLink("Slet", "Delete", new { id = poll.Id, @class = "my-class" },
+                            new { onclick = "return confirm('Er du sikker på du vil slette denne afstemning?');" })
+                                  <span class="glyphicon glyphicon-remove pull-left"></span>
 
-                        </button>
+                              </button>*@
                     </td>
                 </tr>
             }
@@ -66,7 +67,7 @@
 else
 {
     <div class="panel panel-heading">
-        <p style="text-align:center; font-size: 25px; padding: 10px; color:grey">Aktive afstemninger(@Model.Where(p =>p.Active == true).Count())</p>
+        <p style="text-align:center; font-size: 25px; padding: 10px; color:grey">Aktive afstemninger(@Model.Where(p => p.Active == true).Count())</p>
         <div class="clear"></div>
     </div>
     foreach (var poll in Model)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sct.JSKDAL.Repository.Absttraction
 {
-    public interface IAnswerRepository<Answer>
+    public interface IAnswerRepository
     {
         Answer Add(Answer answer);
         List<Answer> ReadAllByUser(int userid);

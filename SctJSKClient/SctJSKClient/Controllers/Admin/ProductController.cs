@@ -5,6 +5,8 @@ using SctJSKClient.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -62,24 +64,35 @@ namespace SctJSKClient.Controllers
         // POST: Aftale/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Image,Price,Description,Category,availableforStudents,onlyForHeadmasters")]Product product)
+        public ActionResult Create(ProductViewModel productvm)
         {
-            
-                product.Category = facade.GetCategoryService().Get(product.Category.Id);
+            ModelState.Remove("Product.Category.Name");
+            ModelState.Remove("Product.Category.Description");
+            if (ModelState.IsValid)
+            {
+                productvm.Product.Category = facade.GetCategoryService().Get(productvm.Product.Category.Id);
 
-                facade.GetProductService().Add(product);
-                return Redirect("Index");
-            
-            
+                HttpResponseMessage response = facade.GetProductService().Add(productvm.Product);
+                if (response.StatusCode == HttpStatusCode.Created)
+                    return Redirect("Index");
+                else
+                    return new HttpStatusCodeResult(response.StatusCode);
+            }
+            productvm.Categories = facade.GetCategoryService().GetAll().ToList();
+            return View(productvm);
         }
 
         // GET: Aftale/Edit/5
         public ActionResult Edit(int id)
         {
-
+            var product = facade.GetProductService().Get(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
             ProductViewModel pvm = new ProductViewModel()
             {
-                Product = facade.GetProductService().Get(id),
+                Product = product,
                 Categories = facade.GetCategoryService().GetAll().ToList()
             };
             return View(pvm);
@@ -88,28 +101,33 @@ namespace SctJSKClient.Controllers
         // POST: Aftale/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Image,Price,Description,Category,availableforStudents,onlyForHeadmasters")]Product product)
+        public ActionResult Edit(ProductViewModel productvm)
         {
-            try
+            ModelState.Remove("Product.Category.Name");
+            ModelState.Remove("Product.Category.Description");
+            // TODO: Add update logic here
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
-                    product.Category = facade.GetCategoryService().Get(product.Category.Id);
-                    facade.GetProductService().Update(product);
-
-                
-                return RedirectToAction("Index");
+                productvm.Product.Category = facade.GetCategoryService().Get(productvm.Product.Category.Id);
+                HttpResponseMessage response = facade.GetProductService().Update(productvm.Product);
+                if (response.StatusCode == HttpStatusCode.OK)
+                    return RedirectToAction("Index");
+                else
+                    return new HttpStatusCodeResult(response.StatusCode);
             }
-            catch
-            {
-                return View();
-            }
+            return View(productvm);
+
         }
 
         // GET: Aftale/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            var product = facade.GetProductService().Get(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            var product = facade.GetProductService().Get(id.Value);
             if (product == null)
             {
                 return HttpNotFound();
@@ -122,16 +140,14 @@ namespace SctJSKClient.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Product product)
         {
-            try
-            {
-                // TODO: Add delete logic here
-                facade.GetProductService().Delete(product);
+
+            // TODO: Add delete logic here
+            HttpResponseMessage response = facade.GetProductService().Delete(product);
+            if (response.StatusCode == HttpStatusCode.NoContent)
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            else
+                return new HttpStatusCodeResult(response.StatusCode);
+
         }
     }
 }

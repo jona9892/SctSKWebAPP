@@ -44,12 +44,12 @@ namespace Sct.JSKDAL
             return new OrderDetailRepository(ctx);
         }
 
-        public IArrangementRepository<Arrangement> GetArrangementRepository()
+        public IRepository<Arrangement> GetArrangementRepository()
         {
             return new ArrangementRepository(ctx);
         }
 
-        public IArrangementProductRepository<ArrangementProduct> GetArrangementProductRepository()
+        public IArrangementProductRepository GetArrangementProductRepository()
         {
             return new ArrangementProductRepository(ctx);
         }
@@ -59,12 +59,12 @@ namespace Sct.JSKDAL
             return new PollRepository(ctx);
         }
 
-        public IPollOptionRepository<PollOption> GetPollOptionRepository()
+        public IPollOptionRepository GetPollOptionRepository()
         {
             return new PollOptionRepository(ctx);
         }
 
-        public IAnswerRepository<Answer> GetAnswerRepository()
+        public IAnswerRepository GetAnswerRepository()
         {
             return new AnswerRepository(ctx);
         }

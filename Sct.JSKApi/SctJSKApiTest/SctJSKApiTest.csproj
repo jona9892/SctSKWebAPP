@@ -59,9 +59,9 @@
     <Compile Include="BLL\BLLArrangementTest.cs" />
     <Compile Include="BLL\BLLOrderTest.cs" />
     <Compile Include="BLL\BLLUserTest.cs" />
-    <Compile Include="DAL\Context\ContextTest.cs" />
-    <Compile Include="DAL\Context\DBContextSctJSKTest.cs" />
-    <Compile Include="DAL\Context\DBTestInitalizer.cs" />
+    <Compile Include="DAL\ContextTest\ContextTest.cs" />
+    <Compile Include="DAL\ContextTest\DBContextSctJSKTest.cs" />
+    <Compile Include="DAL\ContextTest\DBTestInitalizer.cs" />
     <Compile Include="DAL\EntitiesTest\AdressTest.cs" />
     <Compile Include="DAL\EntitiesTest\AnswerTest.cs" />
     <Compile Include="DAL\EntitiesTest\ArrangementProductTest.cs" />

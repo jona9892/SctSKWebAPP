@@ -110,7 +110,6 @@ namespace SctJSKApiTest.BLL
             {
                 Id = -1,
                 PollOption = m_pollOption,
-                PollId = m_poll1.Id,
                 User = m_user1
             };
             
@@ -125,6 +124,7 @@ namespace SctJSKApiTest.BLL
             var poll1 = facade.GetPollRepository().Add(m_poll1);
             var poll2 = facade.GetPollRepository().Add(m_poll2);
             var pollOption = facade.GetPollOptionRepository().Add(m_pollOption);
+            m_answer.PollId = poll1.Id;
             var answer = facade.GetAnswerRepository().Add(m_answer);
             //----------Udføre test metode ------------
             var unAnsweredPolls = bo.GetUnAnsweredPolls(user1.Id);

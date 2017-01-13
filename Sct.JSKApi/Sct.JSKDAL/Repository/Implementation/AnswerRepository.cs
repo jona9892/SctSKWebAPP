@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sct.JSKDAL.Repository.Implementation
 {
-    public class AnswerRepository : IAnswerRepository<Answer>
+    public class AnswerRepository : IAnswerRepository
     {
         private DBContext ctx;
 

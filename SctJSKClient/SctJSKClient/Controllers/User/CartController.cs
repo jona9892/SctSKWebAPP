@@ -53,7 +53,7 @@ namespace SctJSKClient.Controllers
                 
                 Session["cart"] = cart;
             }
-            return View("Index");
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         private int isExits(int id)
@@ -74,11 +74,17 @@ namespace SctJSKClient.Controllers
             List<Item> cart = (List<Item>)Session["cart"];
             cart.RemoveAt(id);
             Session["cart"] = cart;
-            return View("Index");
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         public ActionResult SetOrderDates()
         {
+            List<Item> cart = (List<Item>)Session["cart"];
+            if (cart == null)
+            {
+                return View("Index");
+            }
+
             List<OrderDate> listmodel = new List<OrderDate>();
             string tomorrow = DateTime.Today.AddDays(1).Date.ToString();
             string date = tomorrow.Split(' ')[0];
@@ -103,14 +109,19 @@ namespace SctJSKClient.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult SetOrderDates(IEnumerable<OrderDate> dates, string dayoftime)
         {
-            OrderDateViewModel odvm = new OrderDateViewModel
+            if (ModelState.IsValid)
             {
-                dates = dates.ToList(), 
-                timeofday = dayoftime
-            };
-            Session["orderdates"] = odvm;
+                OrderDateViewModel odvm = new OrderDateViewModel
+                {
+                    dates = dates.ToList(),
+                    timeofday = dayoftime
+                };
+                Session["orderdates"] = odvm;
+
+                return RedirectToAction("Checkout");
+            }
+            return View();
             
-            return RedirectToAction("Checkout");
         }
 
         public ActionResult BlankEditorRow()
@@ -121,7 +132,12 @@ namespace SctJSKClient.Controllers
 
         public ActionResult Checkout()
         {
-            if(SessionPersister.Username == null)
+            List<Item> cart = (List<Item>)Session["cart"];
+            if (cart == null)
+            {
+                return View("Index");
+            }
+            if (SessionPersister.Username == null)
             {
                 return RedirectToAction("Index", "account");
             }
@@ -129,11 +145,18 @@ namespace SctJSKClient.Controllers
             {
 
                 CheckoutItem checkoutitem = new CheckoutItem();
-                List<Item> cart = (List<Item>)Session["cart"];
+                List<Order> orderList = new List<Order>();
+                //List<Item> cart = (List<Item>)Session["cart"];
                 OrderDateViewModel orderdates = (OrderDateViewModel)Session["orderdates"];
+                if (cart == null)
+                {
+                    return Redirect("Index");
+                }
+                    
+
 
                 //Save order 
-                foreach(var od in orderdates.dates)
+                foreach (var od in orderdates.dates)
                 {
                     Order order = new Order();
                     order.OrderCreated = DateTime.Now;
@@ -154,6 +177,7 @@ namespace SctJSKClient.Controllers
 
                     Order getOrder = facade.GetOrderService().Add(order);
                     int orderId = getOrder.Id;
+                    orderList.Add(getOrder);
                     checkoutitem.order = getOrder;
 
                     //Save order detail
@@ -172,6 +196,7 @@ namespace SctJSKClient.Controllers
                         checkoutitem.orderDetails.Add(orderDetail);
                     }
                 }
+                checkoutitem.orders = orderList;
                
                 //Remove cart
                 Session.Remove("cart");

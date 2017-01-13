@@ -44,13 +44,14 @@ namespace Sct.JSKDAL.Repository.Implementation
             return ctx.Polls.Include("PollOptions").ToList();
         }
 
-        public void Update(Poll p)
+        public Poll Update(Poll p)
         {
             var pollDB = ctx.Polls.FirstOrDefault(c => c.Id == p.Id);
             pollDB.Question = p.Question;
             pollDB.Active = p.Active;
 
             ctx.SaveChanges();
+            return pollDB;
         }
     }
 }

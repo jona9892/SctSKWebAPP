@@ -65,7 +65,7 @@
             @Html.LabelFor(model => model.Categories, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                <select class="form-control" id="categoryId" name="product.Category.Id">
+                <select class="form-control" id="Id" name="product.Category.Id">
                     @foreach (var item in Model.Categories)
                     {
                         <option value="@item.Id">@item.Name</option>

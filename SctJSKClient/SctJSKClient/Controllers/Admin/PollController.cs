@@ -6,6 +6,8 @@ using SctJSKClient.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,52 +20,83 @@ namespace SctJSKClient.Controllers
 
         public ActionResult Index()
         {
-
-            if(SessionPersister.UserRole == "Admin")
+            if (SessionPersister.UserRole == "Admin")
             {
                 var polls = facade.GetPollService().ReadAll();
                 return View(polls);
-            }else
+            }
+            else
             {
                 var userid = int.Parse(SessionPersister.UserId);
                 var polls = facade.GetAnswerService().GetAllUnAnsweredPolls(userid);
                 return View(polls);
-            }     
+            }
         }
 
-        public ActionResult GoToPoll(int id)
+        public ActionResult GoToPoll(int? id)
         {
-            var poll = facade.GetPollService().Read(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var poll = facade.GetPollService().Read(id.Value);
             PollOptionViewModel povm = new PollOptionViewModel
             {
                 Poll = poll
             };
             return View(povm);
         }
-        
-        [HttpPost]        
+
+        [HttpPost]
         public ActionResult GoToPoll(PollOptionViewModel povm)
         {
-            var userid = int.Parse(SessionPersister.UserId);
-            Answer answer = new Answer();
-            answer.PollOptionId = int.Parse(povm.selected);
-            answer.UserId = userid;
-            answer.PollId = povm.Poll.Id;
 
-            facade.GetAnswerService().Add(answer);
-            return RedirectToAction("Index");
+            ModelState.Remove("PollOption");
+            ModelState.Remove("Poll.Question");
+            if (ModelState.IsValid)
+            {
+                var userid = int.Parse(SessionPersister.UserId);
+                Answer answer = new Answer();
+                answer.PollOptionId = int.Parse(povm.selected);
+                answer.UserId = userid;
+                answer.PollId = povm.Poll.Id;
+
+                HttpResponseMessage response = facade.GetAnswerService().Add(answer);
+                if (response.StatusCode == HttpStatusCode.Created)
+                    return RedirectToAction("Index");
+                else
+                    return new HttpStatusCodeResult(response.StatusCode);
+            }
+            var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
+            var poll = facade.GetPollService().Read(povm.Poll.Id);
+            PollOptionViewModel povm2 = new PollOptionViewModel
+            {
+                Poll = poll
+            };
+            return View(povm2);
+
         }
 
-        public ActionResult PollResult(int id)
+        public ActionResult PollResult(int? id)
         {
-            var pollresults = facade.GetAnswerService().ReadResults(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var pollresults = facade.GetAnswerService().ReadResults(id.Value);
+            if (pollresults == null)
+            {
+                return HttpNotFound();
+            }
             List<Result> voteResults = new List<Result>();
             int totalvotes = pollresults.Sum(r => r.Votes);
-            foreach(var item in pollresults)
+            foreach (var item in pollresults)
             {
                 Result result = new Result();
                 result.PollOption = item.OptionText;
-                double percent = (double)item.Votes / totalvotes *100;
+                double percent = (double)item.Votes / totalvotes * 100;
                 result.VotePercent = Math.Round(percent, 0);
                 result.totalvotes = totalvotes;
                 result.votes = item.Votes;
@@ -73,7 +106,7 @@ namespace SctJSKClient.Controllers
             PollResultViewModel prvm = new PollResultViewModel
             {
                 Results = voteResults.ToList(),
-                Poll = facade.GetPollService().Read(id)
+                Poll = facade.GetPollService().Read(id.Value)
             };
             return View(prvm);
         }
@@ -103,15 +136,26 @@ namespace SctJSKClient.Controllers
             if (ModelState.IsValid)
             {
                 pmv.Poll.PollOptions = pmv.options.ToList();
-                facade.GetPollService().Add(pmv.Poll);
-                return Redirect("Index");
+                HttpResponseMessage response = facade.GetPollService().Add(pmv.Poll);
+                if (response.StatusCode == HttpStatusCode.Created)
+                    return Redirect("Index");
+                else
+                    return new HttpStatusCodeResult(response.StatusCode);
             }
             return View();
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            Poll poll = facade.GetPollService().Read(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Poll poll = facade.GetPollService().Read(id.Value);
+            if (poll == null)
+            {
+                return HttpNotFound();
+            }
             return View(poll);
         }
 
@@ -120,22 +164,16 @@ namespace SctJSKClient.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Question,Active")]Poll poll)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
-                if (ModelState.IsValid)
-                {
-
-                    facade.GetPollService().Update(poll);
-
-                }
-                return RedirectToAction("Index");
+                HttpResponseMessage response = facade.GetPollService().Update(poll);
+                if (response.StatusCode == HttpStatusCode.OK)
+                    return RedirectToAction("Index");
+                else
+                    return new HttpStatusCodeResult(response.StatusCode);
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
+
         }
 
         public ActionResult Delete(int id)

@@ -14,7 +14,7 @@ namespace SctJSKClient
                         "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/customs").Include(
-                        "~/Scripts/AdministrationNavScript.js", "~/Scripts/SearchScript.js"));
+                        "~/Scripts/AdministrationNavScript.js").Include("~/Scripts/SearchScript.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -41,7 +41,7 @@ namespace SctJSKClient
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            
+
         }
     }
 }

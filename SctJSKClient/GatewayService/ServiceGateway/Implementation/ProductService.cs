@@ -12,7 +12,7 @@ namespace GatewayService.Services.Implementation
     public class ProductService : IProductService<Product>
     {
         //Constant, the address of the web api
-        protected static readonly string END_POINT = END_POINT + "http://localhost:55391/API/Product";
+        protected static readonly string END_POINT = "http://localhost:55391/API/Product";
 
         public HttpResponseMessage Add(Product item)
         {

@@ -21,25 +21,5 @@ namespace GatewayService.Services.Implementation
                     client.PostAsJsonAsync(END_POINT + "/", arrangementProduct).Result;
             }
         }
-
-        public ArrangementProduct Delete(ArrangementProduct item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ArrangementProduct Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ArrangementProduct> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ArrangementProduct Update(ArrangementProduct item)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

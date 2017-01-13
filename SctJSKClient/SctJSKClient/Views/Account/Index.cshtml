@@ -123,10 +123,12 @@
 @Styles.Render("~/Content/css")
 @Scripts.Render("~/bundles/modernizr")
 <body>
-
     <div class="login-page">
         <div class="form">
+
             <form class="login-form" method="post" action="~/Account/Login">
+                @Html.AntiForgeryToken()
+
                 @Html.TextBoxFor(model => model.User.Username, new { @class = "form-control", placeholder = "Brugernavn" })
                 @Html.PasswordFor(model => model.User.Password, new { @class = "form-control", placeholder = "Kodeord" })
                 <button type="submit">login</button>

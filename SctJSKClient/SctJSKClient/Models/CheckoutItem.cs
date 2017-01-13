@@ -10,8 +10,10 @@ namespace SctJSKClient.Models
     {
         public CheckoutItem() {
             orderDetails = new List<OrderDetail>();
+            orders = new List<Order>();
         }
         public Order order { get; set; }
         public List<OrderDetail> orderDetails { get; set; }
+        public List<Order> orders { get; set; }
     }
 }

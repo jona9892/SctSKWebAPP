@@ -24,6 +24,18 @@
         margin-left: 1%;
     }
 
+    #moviePoster {
+        position: relative;
+        width: 200px;
+        height: 300px;
+        max-height: 100%;
+        max-width: 100%;
+        display: block;
+        background-size: 100% 100%;
+        margin: 10%;
+        transition: 0.3s;
+    }
+
     .prod_title {
         color: #428bca;
         padding: 5px 0 0 15px;
@@ -89,7 +101,7 @@
         </div>
     </div>
 </div>
-<div class="col-xs-12 col-sm-8 col-md-9">
+<div class="col-xs-6 col-sm-4 col-md-9">
     <div class="panel panel-default">
         <p class="prod_title">@Model.Category.Name</p>
         <p style="padding-left:2%">@Model.Category.Description-</p>
@@ -98,56 +110,60 @@
 
     <div id="products">
         @if (SessionPersister.UserRole == "Student")
+        {
+            foreach (var product in Model.Products)
             {
-                foreach (var product in Model.Products)
-                {
-                    if (product.availableforStudents == true)
-                    {
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 2%; overflow:auto">
-                        <div class="thumbnail" style="max-width:180px; float:left; width:100%;">
+                <div class="col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 2%; overflow:auto">
+                    <a href="/Home/ProductDetails/@product.Id">
+                        <div class="thumbnail" style="max-width:100%; float:left; width:120%;">
 
-                            <img src="@product.Image" alt="...">
-                            <a href="/Home/ProductDetails/@product.Id"><h4>@product.Title</h4></a>
+                            <img id="moviePoster" style="height:150px; width:120%; display:block; margin-right:auto; margin-left:auto;" src="@product.Image" alt="...">
+                            <h4>@product.Title</h4>
+
                             <p>@product.Description</p>
 
                             <hr class="line">
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
-                                    <p class="price">@product.Price dkk</p>
+                                    <b class="price" style="font-size:medium">@product.Price Kr.</b>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
-                                    <a href="/Cart/Buy/@product.Id" class="btn btn-primary right"><i class="glyphicon glyphicon-shopping-cart"></i></a>
+
+                                    <a href="/Cart/Buy/@product.Id" class="btn btn-success right"><i class="glyphicon glyphicon-shopping-cart"></i>&nbsp;Læg i kurv</a>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-
+                    </a>
+                </div>
             }
         }
         else
         {
             foreach (var product in Model.Products)
             {
-                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 2%; overflow:auto">
-                    <div class="thumbnail" style="max-width:180px; float:left; width:100%;">
+                <div class="col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 2%; overflow:auto">
+                    <a href="/Home/ProductDetails/@product.Id">
+                        <div class="thumbnail" style="max-width:100%; float:left; width:120%;">
 
-                        <img src="@product.Image" alt="...">
-                        <a href="/Home/ProductDetails/@product.Id"><h4>@product.Title</h4></a>
-                        <p>@product.Description</p>
+                            <img id="moviePoster" style="height:150px; width:120%; display:block; margin-right:auto; margin-left:auto;" src="@product.Image" alt="...">
+                            <h4>@product.Title</h4>
 
-                        <hr class="line">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6">
-                                <p class="price">@product.Price dkk</p>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
+                            <p>@product.Description</p>
 
-                                <a href="/Cart/Buy/@product.Id" class="btn btn-primary right"><i class="glyphicon glyphicon-shopping-cart"></i></a>
+                            <hr class="line">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <b class="price" style="font-size:medium">@product.Price Kr.</b>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
 
+                                    <a href="/Cart/Buy/@product.Id" class="btn btn-success right"><i class="glyphicon glyphicon-shopping-cart"></i>&nbsp;Læg i kurv</a>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             }
         }

@@ -5,9 +5,9 @@
 }
 
 <script>
-function goBack() {
-    window.history.back();
-}
+    function goBack() {
+        window.history.back();
+    }
 </script>
 
 <div class="container">
@@ -25,35 +25,79 @@ function goBack() {
             <div class="panel-body">
                 <div class="items">
 
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <table class="table table-striped">
-                            <tr>
-                                <td>
-                                    @foreach (var item in Model.OrderDetails)
-                                    {
-                                        <ul>
-                                            @{
-                                                var ps = @item.Quantity * @item.Price;
-                                            }
-                                            <li style="font-weight:bold">@item.Product.Title</li>
-                                            <li>Antal: @item.Quantity</li>
-                                            <li>Pris per styk: @item.Price dk</li>
-                                            <li>Pris i alt:@ps dk</li>
-                                        </ul>
-                                                }
+                            <thead>
+                                <tr>
+                                    <th>Produkt</th>
+                                    <th>Antal</th>
+                                    <th class="text-center">Pris</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                </td>
-                            </tr>
+                                @foreach (var item in Model.OrderDetails)
+                                {
+                                    <tr>
+                                        <td class="col-sm-8 col-md-6">
+                                            <div class="media">
+                                                <a class="thumbnail pull-left" href="/Home/ProductDetails/@item.Product.Id"> <img class="media-object" src="@item.Product.Image" style="width: 72px; height: 72px;"> </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="/Home/ProductDetails/@item.Product.Id">@item.Product.Title</a></h4>
+                                                    <h5 class="media-heading">@item.Product.Description</h5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-th="Quantity">
+                                            <p class="form-control text-center" style="width:70px;">@item.Quantity</p>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1 text-center"><strong>@item.Product.Price Kr.</strong></td>
+                                        @{
+                                            var total = item.Quantity * item.Product.Price;
+                                        }
+                                        <td class="col-sm-1 col-md-1 text-right"><strong>@total Kr.</strong></td>
+                                    </tr>
+                                            }
+                            </tbody>
                         </table>
                     </div>
 
-                    <div class="col-md-3">
-                        <div style="text-align: center;">
-                            @{
-                                var sum = Model.OrderDetails.Sum(x => x.Quantity * x.Product.Price);
-                            }
-                            <h3>Ordre Total</h3>
-                            <h3><span style="color:green;">@sum dk</span></h3>
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4>Ordre detaljer</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                    <h4 style="color:#000000"><b>Datoer</b></h4>
+                                    @foreach (var order in Model.Orders)
+                                    {
+
+                                        <li>
+                                            @{
+                                                var date = order.OrderDate.Date.ToString().Split(' ')[0];
+                                            }
+                                            @date
+                                        </li>
+                                                }
+                                </div>
+                                <div style="margin-top:10px">
+                                    <b>OrdreNr:</b> @Model.order.Id
+                                    <b>Pause:</b> @Model.order.TimeOfDay
+
+                                </div>
+                                <div>
+                                    <div class="well" style="text-align: center; bottom:0">
+                                        @{
+                                            var sum = Model.OrderDetails.Sum(x => x.Quantity * x.Product.Price);
+                                        }
+                                        <h3>Ordre Total</h3>
+                                        <h3><span style="color:green;">@sum dk</span></h3>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -3,41 +3,79 @@ using Sct.JSKApi.Models;
 using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
 using Sct.JSKDAL.Entities;
+using Sct.JSKDAL.Repository.Absttraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Sct.JSKApi.Controllers
 {
     public class ArrangementController : ApiController
     {
-        private Facade facade;
+        private IRepository<Arrangement> ar;
         private BLLArrangement ba;
         public ArrangementController()
         {
-            facade = new Facade(new DBContextSctJSK());
+            ar = new Facade(new DBContextSctJSK()).GetArrangementRepository();
             ba = new BLLArrangement(new DBContextSctJSK());
         }
 
-        public HttpResponseMessage GetArrangements()
+        public IEnumerable<Arrangement> GetArrangements()
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetArrangementRepository().ReadAll());
-            return response;
+            var arrangements = ar.ReadAll();
+            //var response = Request.CreateResponse(HttpStatusCode.OK, arrangements);
+            return arrangements;
+          
         }
 
-        public HttpResponseMessage GetArrangement(int id)
+        [ResponseType(typeof(Arrangement))]
+        public IHttpActionResult GetArrangement(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetArrangementRepository().Read(id));
-            return response;
+
+            /*
+            if(arrangement != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.OK, arrangement);
+                return response;
+            }else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }*/
+            var arrangement = ar.Read(id);
+            if (arrangement == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(arrangement);
+
         }
 
-        public HttpResponseMessage PostArrangement(Arrangement p)
+        [ResponseType(typeof(Arrangement))]
+        public IHttpActionResult PostArrangement(Arrangement p)
         {
-            var response = Request.CreateResponse(HttpStatusCode.Created, facade.GetArrangementRepository().Add(p));
-            return response;
+            /*
+            var arrangement = ar.Add(p);
+            if (arrangement != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.Created, arrangement);
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }*/
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var arrangement = ar.Add(p);
+            return Content(HttpStatusCode.Created, arrangement);
+            //return CreatedAtRoute("DefaultApi", new { id = arrangement.Id }, arrangement);
         }
         /*
         public void PutArrangement(int id, Arrangement p)
@@ -54,15 +92,21 @@ namespace Sct.JSKApi.Controllers
 
         public void DeleteArrangement(int id)
         {
-            var e = facade.GetArrangementRepository().Read(id);
-            facade.GetArrangementRepository().Delete(e);
+            var e = ar.Read(id);
+            if (e == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            ar.Delete(e);
         }
 
         [Route("api/arrangement/events")]
         [HttpGet]
         public IEnumerable<Events> GetEvents()
         {
-            return ba.convertArrangementDataToEvents();
+            var events = ba.convertArrangementDataToEvents();
+
+            return events;
         }
 
     }

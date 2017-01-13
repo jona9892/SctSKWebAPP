@@ -2,56 +2,73 @@
 using Sct.JSKDAL;
 using Sct.JSKDAL.Context;
 using Sct.JSKDAL.Entities;
+using Sct.JSKDAL.Repository.Absttraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Sct.JSKApi.Controllers
 {
     public class AnswerController : ApiController
     {
-        private Facade facade;
+        private IAnswerRepository ar;
         private BLLAnswer ba;
         public AnswerController()
         {
-            facade = new Facade(new DBContextSctJSK());
+            ar = new Facade(new DBContextSctJSK()).GetAnswerRepository();
             ba = new BLLAnswer(new DBContextSctJSK());
         }
 
-        public HttpResponseMessage PostAnswer(Answer p)
+        [ResponseType(typeof(Answer))]
+        public IHttpActionResult PostAnswer(Answer p)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var answer = ar.Add(p);
 
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetAnswerRepository().Add(p));
-            return response;
+            if(answer == null)
+            {
+                return InternalServerError();
+            }
+            return Content(HttpStatusCode.Created, answer); 
+
         }
 
         [Route("api/Answer/{id}/user")]
         [HttpGet]
-        public HttpResponseMessage GetAllByUser(int id)
+        public IEnumerable<Answer> GetAllByUser(int id)
         {
-
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetAnswerRepository().ReadAllByUser(id));
-            return response;
+            var answer = ar.ReadAllByUser(id);
+ 
+            //var response = Request.CreateResponse(HttpStatusCode.OK, answer);
+            return answer;
         }
 
         [Route("api/Answer/{id}/polls")]
         [HttpGet]
-        public HttpResponseMessage GetAllUnAnsweredByUser(int id)
+        public IEnumerable<Poll> GetAllUnAnsweredByUser(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, ba.GetUnAnsweredPolls(id));
-            return response;
+            var polls = ba.GetUnAnsweredPolls(id);
+
+            //var response = Request.CreateResponse(HttpStatusCode.OK, polls);
+            return polls;
+
         }
 
         [Route("api/Answer/{id}/results")]
         [HttpGet]
-        public HttpResponseMessage GetResultsOfPoll(int id)
+        public IEnumerable<PollResult> GetResultsOfPoll(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, facade.GetAnswerRepository().ReadResults(id));
-            return response;
+            var pollResult = ar.ReadResults(id);
+            //var response = Request.CreateResponse(HttpStatusCode.OK, pollResult);
+            return pollResult;
         }
     }
 }

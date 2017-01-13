@@ -20,10 +20,9 @@ namespace SctJSKClient.Controllers
             return View();
         }
 
-        public ActionResult GetEvents(DateTime start, DateTime end)
+        public ActionResult GetEvents()
         {
             //Get the events
-            //You may get from the repository also
             var userId = int.Parse(SessionPersister.UserId);
             var eventList = facade.GetUserService().GetEvents(userId);
 

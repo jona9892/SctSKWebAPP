@@ -10,7 +10,7 @@ using Sct.JSKDAL.Entities;
 
 namespace Sct.JSKDAL.Repository.Implementation
 {
-    public class ArrangementRepository : IArrangementRepository<Arrangement>
+    public class ArrangementRepository : IRepository<Arrangement>
     {
 
         private DBContext ctx;
@@ -44,6 +44,11 @@ namespace Sct.JSKDAL.Repository.Implementation
         public List<Arrangement> ReadAll()
         {
             return ctx.Arrangements.Include("Products").ToList();
+        }
+
+        public Arrangement Update(Arrangement e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

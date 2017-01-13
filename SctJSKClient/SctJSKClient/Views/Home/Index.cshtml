@@ -1,6 +1,5 @@
 ﻿@model SctJSKClient.ViewModels.HomePageViewModel
 
-
 <style>
     .panel-body {
         padding: 15px;
@@ -33,38 +32,44 @@
         </div>
     </div>
 </div>
-
+<div class="col-xs-12 col-sm-8 col-md-9" style="float:right; overflow:auto; ">
+    <div class="jumbotron" style="background:white; border-style: solid; border-color: #428bca; border-width: 2px;">
+        <h1 style="font-weight:500; font-style:italic; color:#428bca;">Sct.Jacobi skole kantine</h1>
+        <p style="color:#428bca; font-style:oblique"> - Velkommen til online bestilling af kantine mad med mere.</p>
+    </div>
+</div>
 
 @foreach (var cat in Model.Categories)
-{
+            {
     <div class="col-xs-12 col-sm-8 col-md-9" style="float:right; overflow:auto;">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h2 class="panel-title">@cat.Name produkter</h2>
             </div>
-            <div class="panel-body">
-                @foreach (var product in cat.Product.Take(3))
+            <div class="panel-body" style="margin-bottom:-2%;">
+
+                @foreach (var product in cat.Product.Take(4))
                 {
-                    <div class="row">
-                        <div class="col-md-3 col-sm-3">
-                            <img style="height:100px; width:100px;" src="@product.Image" alt="...">
-                        </div>
-                        <div class="col-md-6 col-sm-4">
-                            <b>
-                                <a href="/Home/ProductDetails/@product.Id">@product.Title</a>
-                            </b>
-                            <p>
-                                @product.Description
-                            </p>
-                        </div>
-                        <div class="col-md-3 col-sm-5">
-                            <div class="h3" style="margin-top:0px;">
-                                <b>@product.Price kr.</b>
+                    <div class="col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 2%; overflow:auto">
+                        <div class="panel panel-info" style="padding-top:-0%">
+                            <div class="panel-heading">
+                                <h2 class="panel-title"><a href="/Home/ProductDetails/@product.Id">@product.Title</a></h2>
                             </div>
-                            <a href="/Cart/Buy/@product.Id" class="btn btn-success right"><i class="glyphicon glyphicon-shopping-cart pull-left"></i>Læg i kurv</a>
+                            <div class="panel-body">
+                                <p>@product.Description</p>
+                                <div>
+                                    <img style="height:100px; width:100px; display:block; margin-right:auto; margin-left:auto;" src="@product.Image" alt="...">
+                                    <p></p>
+                                </div>
+                                <div class="row">
+                                    <b style="font-size:small; margin-left:5px">@product.Price kr.</b>
+                                    <a href="/Cart/Buy/@product.Id" class="btn btn-success right" id="toastr-success"><i class="glyphicon glyphicon-shopping-cart pull-left"></i>&nbsp;Læg i kurv</a>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <hr>
+
                 }
 
             </div>
@@ -76,21 +81,3 @@
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam id nisi posuere, gravida arcu vitae, cursus erat. Sed non mauris vitae neque interdum maximus id sed magna. In a odio purus. Sed venenatis diam dolor, lobortis eleifend ipsum volutpat et. Nam tempus, nulla a imperdiet luctus,
 </div>
 
-@*
-    <div class="container" id="left">
-        <div class="container" style="background-color:#428bca; ">
-            <p style="color:white; margin-left:5%; margin-top:5%; font-size:20px; ">Produkter</p>
-        </div>
-        <div style="overflow:auto; float: left;">
-            @using (Html.BeginForm())
-                {
-                <div class="form-horizonthal">
-                    <div class="form-group">
-                        <input placeholder="Søg..." type="text" class="form-control" id="txtAutocomplete" style="max-width:300px;" /><br />
-                        <input type="button" class="btn btn-default" id="btnsubmit" value="get Value" />
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-*@

@@ -12,7 +12,7 @@ namespace Sct.JSKDAL.Repository.Absttraction
         List<Poll> ReadAll();
         Poll Add(Poll poll);
         Poll Read(int id);
-        void Update(Poll p);
+        Poll Update(Poll p);
         void Delete(Poll p);
     }
 }

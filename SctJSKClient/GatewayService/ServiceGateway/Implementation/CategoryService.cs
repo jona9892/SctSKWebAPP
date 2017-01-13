@@ -30,7 +30,7 @@ namespace GatewayService.Services.Implementation
             {
                 HttpResponseMessage response =
                     client.DeleteAsync(END_POINT + "/" + item.Id).Result;
-                return response;
+                return response.EnsureSuccessStatusCode();
             }
         }
 

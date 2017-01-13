@@ -45,13 +45,14 @@ namespace Sct.JSKDAL.Repository.Implementation
             return ctx.Categories.Include("Product").ToList();
         }
 
-        public void Update(Category c)
+        public Category Update(Category c)
         {
             var categoryDB = ctx.Categories.FirstOrDefault(item => item.Id == c.Id);
             categoryDB.Name = c.Name;
             categoryDB.Description = c.Description;
 
             ctx.SaveChanges();
+            return categoryDB;
         }
     }
 }
